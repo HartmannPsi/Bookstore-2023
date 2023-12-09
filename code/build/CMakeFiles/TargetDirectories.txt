@@ -1,0 +1,3 @@
+/home/hartmann/Cpp/Bookstore-2023/code/build/CMakeFiles/code.dir
+/home/hartmann/Cpp/Bookstore-2023/code/build/CMakeFiles/edit_cache.dir
+/home/hartmann/Cpp/Bookstore-2023/code/build/CMakeFiles/rebuild_cache.dir
