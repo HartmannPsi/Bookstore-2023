@@ -2,58 +2,60 @@
 ## Hartmann_Psi
 ***
 ## 主体逻辑：
-头文件：
-- account.hpp：管理账户系统
-  - class Account：存储在外存中的账户数据打包
-  - private:
-    - char name[]
-    - char id[]
-    - char password[]
-    - Level prev
-  - public:
-    - bool operator>, &lt;, >=, <=, ==：基于id字典序顺序插入、删除、查找
-    - Account operator=：赋值
-    - friend std::ostream &operator&lt;&lt;：用于打印调试
-  - class AccountSys：账户系统
-  - private:
-    - List&lt;Account> database：块状链表类
-    - std::stack&lt;Account> log_stack：登录栈
-  - public:
-    - void login / logout / regin / passwd / useradd / erase：题目要求的相应功能
-    - Level telllvl：返回登录栈顶账号的权限等级
-    - Account tellacc：返回登录栈顶账户类
-- block_list.hpp：块状链表模板
-  - class Node&lt;T>：存储在外存中的块的类
-    - public:
-    - unsigned long size
-    - unsigned long next
-    - T data[sqN]
-  - class List&lt;T>：实现块状链表插入、删除、查找操作的类
-  - private:
-    - std::string file_name：文件名
-    - std::fstream file：文件读写类
-    - unsigned long end：块状链表的末尾所在位置
-    - const unsigned long SIZE：每个块所占空间大小
-  - public:
-    - void insert
-    - void erase
-    - std::vector&lt;T> *get
-    - unsigned long count
-    - T find
-    - void print：用于打印调试
-- command.hpp：接受、检查输入&调用相应接口
-  - class Command：实现单条指令功能的类
-  - private:
-    - std::string text：指令原始文本
-  - public:
-    - void execute：根据指令文本执行对应操作
-  - class CommandSys：指令系统
-  - private:
-    - Command latest_command：最新的输入指令
-  - public:
-    - void read：从字符串读取指令
-    - void execute：执行最新的输入指令
-- string_check.hpp：字符串合法性检查
-  - bool num_letter_underscore：仅含数字、字母、下划线
-  - bool non_invisible：除不可见字符外的ASCII字符集
-  - bool non_invisible_quotes：除不可见字符及英文双引号外的ASCII字符集
+### 头文件：
+- `account.hpp`：管理账户系统
+  - `class Account`：存储在外存中的账户数据打包
+  - `private:`
+    - `char name[]`
+    - `char id[]`
+    - `char password[]`
+    - `Level prev`
+  - `public:`
+    - `bool operator>, <, >=, <=, ==`：基于id字典序顺序插入、删除、查找
+    - `Account operator=`：赋值
+    - `friend std::ostream &operator<<`：用于打印调试
+  - `class AccountSys`：账户系统
+  - `private:`
+    - `List<Account> database`：块状链表类
+    - `std::stack<Account> log_stack`：登录栈
+  - `public:`
+    - `void login / logout / regin / passwd / useradd / erase`：题目要求的相应功能
+    - `Level telllvl`：返回登录栈顶账号的权限等级
+    - `Account tellacc`：返回登录栈顶账户类
+- `block_list.hpp`：块状链表模板
+  - `class Node<T>`：存储在外存中的块的类
+    - `public:`
+    - `unsigned long size`
+    - `unsigned long next`
+    - `T data[sqN]`
+  - `class List<T>`：实现块状链表插入、删除、查找操作的类
+  - `private:`
+    - `std::string file_name`：文件名
+    - `std::fstream file`：文件读写类
+    - `unsigned long end`：块状链表的末尾所在位置
+    - `const unsigned long SIZE`：每个块所占空间大小
+  - `public:`
+    - `void insert`
+    - `void erase`
+    - `std::vector<T> *get`
+    - `unsigned long count`
+    - `T find`
+    - `void print`：用于打印调试
+- `command.hpp`：接受、检查输入&调用相应接口
+  - `class Command`：实现单条指令功能的类
+  - `private:`
+    - `std::string text`：指令原始文本
+  - `public:`
+    - `void execute`：根据指令文本执行对应操作
+  - `class CommandSys`：指令系统
+  - `private`:
+    - `Command latest_command`：最新的输入指令
+  - `public`:
+    - `void read`：从字符串读取指令
+    - `void execute`：执行最新的输入指令
+- `string_check.hpp`：字符串合法性检查
+  - `bool num_letter_underscore`：仅含数字、字母、下划线
+  - `bool non_invisible`：除不可见字符外的ASCII字符集
+  - `bool non_invisible_quotes`：除不可见字符及英文双引号外的ASCII字符集
+### 存储：
+- `accounts.dat`：存储账户信息
