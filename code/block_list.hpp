@@ -41,7 +41,7 @@ public:
 
   bool operator==(const Data &y) const {
     const int res = strcmp(index, y.index);
-    return res == 0 && num == y.num;
+    return res == 0;
   }
 
   bool operator<=(const Data &y) const { return !(*this > y); }
@@ -81,10 +81,18 @@ public:
 
 template <class T> class List {
 private:
-  std::string file_name;
+  std::string file_name = "data";
   std::fstream file;
   ul end = 0;    // sqrt(N)
   const ul SIZE; // bigger than sizeof(Node<T>), times of 4096
+
+  void read(Node<T> &block) {
+    file.read(reinterpret_cast<char *>(&block), sizeof(block));
+  }
+
+  void write(const Node<T> &block) {
+    file.write(reinterpret_cast<const char *>(&block), sizeof(block));
+  }
 
 public:
   List(const std::string &name)
@@ -115,14 +123,6 @@ public:
 
     char buffer[MAX];
     file.rdbuf()->pubsetbuf(buffer, sizeof(buffer));
-  }
-
-  void read(Node<T> &block) {
-    file.read(reinterpret_cast<char *>(&block), sizeof(block));
-  }
-
-  void write(const Node<T> &block) {
-    file.write(reinterpret_cast<const char *>(&block), sizeof(block));
   }
 
   void insert(const T &val) {
@@ -220,21 +220,23 @@ public:
       if (block.data[0] <= val && val <= block.data[block.size - 1]) {
 
         bool is_found = false;
-        for (int i = 0; i != block.size; ++i) {
-          if (block.data[i] == val) {
-            is_found = true;
-            --block.size;
-            for (int j = i; j != block.size; ++j) {
-              block.data[j] = block.data[j + 1];
-            }
-            break;
+        T *const lt =
+            std::lower_bound(block.data, block.data + block.size, val);
+        T *const rt =
+            std::upper_bound(block.data, block.data + block.size, val);
+
+        if (lt != rt) {
+          is_found = true;
+          const int count = rt - lt;
+          block.size -= count;
+          for (int j = lt - block.data; j != block.size; ++j) {
+            block.data[j] = block.data[j + count];
           }
         }
 
         if (is_found) {
           file.seekp(pos);
           write(block);
-          return;
         }
       }
 
