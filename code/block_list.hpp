@@ -1,4 +1,5 @@
 #pragma once
+#include <istream>
 #ifndef BLOCK_LIST_HPP
 #define BLOCK_LIST_HPP
 
@@ -59,6 +60,10 @@ public:
 
     return *this;
   }
+
+  friend std::istream &operator>>(std::istream &op, Data &rhs);
+
+  friend std::ostream &operator<<(std::ostream &op, const Data &rhs);
 };
 
 inline bool cmp(const Data &lhs, const Data &rhs) { return lhs.num < rhs.num; }
@@ -209,7 +214,7 @@ public:
     }
   }
 
-  void erase(const T &val) {
+  void erase(const T &val) { //删除字典序与val相同的值，如果有多个则全部删除
 
     ul pos = 0;
     Node<T> block;
@@ -237,6 +242,38 @@ public:
         if (is_found) {
           file.seekp(pos);
           write(block);
+        }
+      }
+
+      pos = block.next;
+    } while (pos != 0);
+  }
+
+  void
+  update(const T &val) { // 将字典序与val相同的元素修改为val，若不存在则无操作
+                         // 仅适用于无重复元素的情况
+
+    ul pos = 0;
+    Node<T> block;
+
+    do {
+      file.seekg(pos);
+      read(block);
+      if (block.data[0] <= val && val <= block.data[block.size - 1]) {
+
+        bool is_found = false;
+        T *const lt =
+            std::lower_bound(block.data, block.data + block.size, val);
+
+        if (*lt == val) {
+          is_found = true;
+          *lt = val;
+        }
+
+        if (is_found) {
+          file.seekp(pos);
+          write(block);
+          return;
         }
       }
 
