@@ -97,8 +97,8 @@ public:
 
       Node<T> empty_block;
       const T val;
-      empty_block.data[0] = val;
-      empty_block.size = 1;
+      // empty_block.data[0] = val;
+      // empty_block.size = 1;
       write(empty_block);
       end += SIZE;
 
@@ -276,7 +276,7 @@ public:
       pos = block.next;
     }
 
-    sort(ans->begin(), ans->end(), cmp);
+    sort(ans->begin(), ans->end());
     return ans;
   }
 
@@ -346,16 +346,20 @@ public:
     ul pos = 0;
     Node<T> block;
     int i = 1;
+    bool is_found = false;
 
     while (true) {
 
       file.seekg(pos);
       read(block);
 
-      std::cout << "block " << i << " size " << block.size << " next "
-                << block.next << " :" << std::endl;
+      // std::cout << "block " << i << " size " << block.size << " next "
+      //           << block.next << " :" << std::endl;
+      if (block.size) {
+        is_found = true;
+      }
       for (int i = 0; i != block.size; ++i) {
-        std::cout << "  " << block.data[i] << std::endl;
+        std::cout << block.data[i];
       }
 
       if (block.next == 0) {
@@ -364,6 +368,10 @@ public:
 
       pos = block.next;
       ++i;
+    }
+
+    if (!is_found) {
+      std::cout << '\n';
     }
   }
 

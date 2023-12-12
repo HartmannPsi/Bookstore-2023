@@ -3,10 +3,12 @@
 #define COMMAND_HPP
 
 #include "account.hpp"
+#include "book.hpp"
 #include <iostream>
 #include <string>
 
 extern AccountSys accounts;
+extern BookSys books;
 
 class Command {
 private:

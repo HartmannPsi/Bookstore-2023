@@ -22,6 +22,8 @@ set(MY_SOURCES
     ${PROJECT_SOURCE_DIR}/block_list.cpp
     ${PROJECT_SOURCE_DIR}/command.cpp
     ${PROJECT_SOURCE_DIR}/string_check.cpp
+    ${PROJECT_SOURCE_DIR}/book.cpp
+    ${PROJECT_SOURCE_DIR}/diary.cpp
 )
 
 # specify an executable, 

@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/code.dir/main.cpp.o CMakeFiles/code.dir/account.cpp.o CMakeFiles/code.dir/block_list.cpp.o CMakeFiles/code.dir/command.cpp.o CMakeFiles/code.dir/string_check.cpp.o -o ../bin/code 

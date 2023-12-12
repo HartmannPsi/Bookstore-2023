@@ -1,12 +1,17 @@
 #pragma once
-#include <ostream>
 #ifndef ACCOUNT_HPP
 #define ACCOUNT_HPP
 
 #include "block_list.hpp"
+#include "book.hpp"
 #include <cstring>
+#include <ostream>
 #include <stack>
 #include <string>
+
+class BookSys;
+
+extern BookSys books;
 
 enum Level { visitor = 0, customer = 1, assistant = 3, admin = 7 };
 

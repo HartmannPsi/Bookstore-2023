@@ -54,7 +54,7 @@ Account Account::operator=(const Account &rhs) {
 
 std::ostream &operator<<(std::ostream &op, const Account &rhs) {
   op << "id: " << rhs.id << "\nname: " << rhs.name
-     << "\npassword: " << rhs.password << '\n';
+     << "\npassword: " << rhs.password << "\nLevel: " << rhs.prev << '\n';
   return op;
 }
 
@@ -82,6 +82,7 @@ void AccountSys::login(const std::string &id, const std::string &password) {
     if (current_acc.prev > acc.prev) {
 
       log_stack.push(acc);
+      books.select_clear();
     } else {
 
       throw 0;
@@ -93,6 +94,7 @@ void AccountSys::login(const std::string &id, const std::string &password) {
     const int res = strcmp(password.c_str(), acc.password);
     if (res == 0) {
       log_stack.push(acc);
+      books.select_clear();
     } else {
 
       throw 0;
@@ -107,6 +109,7 @@ void AccountSys::logout() {
     return;
   } else {
     log_stack.pop();
+    books.select_clear();
   }
 } // prev = 1
 
