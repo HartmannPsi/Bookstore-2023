@@ -41,6 +41,7 @@
     - `std::vector<T> *get`
     - `unsigned long count`
     - `T find`
+    - `void update`
     - `void print`：用于打印调试
 - `command.hpp`：接受、检查输入&调用相应接口
   - `class Command`：实现单条指令功能的类
