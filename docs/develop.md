@@ -36,12 +36,12 @@
     - `unsigned long end`：块状链表的末尾所在位置
     - `const unsigned long SIZE`：每个块所占空间大小
   - `public:`
-    - `void insert`
-    - `void erase`
-    - `std::vector<T> *get`
-    - `unsigned long count`
-    - `T find`
-    - `void update`
+    - `void insert`：功能见前置作业
+    - `void erase`：功能见前置作业
+    - `std::vector<T> *get`：功能见前置作业
+    - `unsigned long count`：返回字典序与val相同的元素个数
+    - `T find`：返回字典序与val相同的一个元素
+    - `void update`：将字典序与val相同的一个元素修改为val
     - `void print`：用于打印调试
 - `command.hpp`：接受、检查输入&调用相应接口
   - `class Command`：实现单条指令功能的类

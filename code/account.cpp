@@ -146,9 +146,8 @@ void AccountSys::passwd(const std::string &id, const std::string &new_passwd,
 
     if (log_stack.top().prev == admin) {
 
-      database.erase(acc);
       strcpy(acc.password, new_passwd.c_str());
-      database.insert(acc);
+      database.update(acc);
     } else {
       throw 0;
       return;
@@ -158,9 +157,8 @@ void AccountSys::passwd(const std::string &id, const std::string &new_passwd,
     const int res = strcmp(current_passwd.c_str(), acc.password);
     if (res == 0) {
 
-      database.erase(acc);
       strcpy(acc.password, new_passwd.c_str());
-      database.insert(acc);
+      database.update(acc);
     } else {
       throw 0;
       return;

@@ -119,11 +119,10 @@ void BookSys::buy(const std::string &isbn, const int &quantity) {
     return;
   }
 
-  database_isbn.erase(buy_book);
   buy_book.quantity -= quantity;
   std::cout << std::fixed << std::setprecision(2) << quantity * buy_book.price
             << '\n';
-  database_isbn.insert(buy_book);
+  database_isbn.update(buy_book);
 }
 
 void BookSys::select(const std::string &isbn) {
@@ -166,8 +165,6 @@ void BookSys::modify(const std::string &isbn, const std::string &name,
     return;
   }
 
-  database_isbn.erase(slct_book);
-
   if (isbn != "") {
     strcpy(slct_book.isbn, isbn.c_str());
   }
@@ -185,7 +182,7 @@ void BookSys::modify(const std::string &isbn, const std::string &name,
     slct_book.price = price;
   }
 
-  database_isbn.insert(slct_book);
+  database_isbn.update(slct_book);
 }
 
 void BookSys::import(const int &quantity, const double &total_cost) {
@@ -195,10 +192,9 @@ void BookSys::import(const int &quantity, const double &total_cost) {
     return;
   }
 
-  database_isbn.erase(slct_book);
   slct_book.quantity += quantity;
   slct_book.total_cost += total_cost;
-  database_isbn.insert(slct_book);
+  database_isbn.update(slct_book);
 }
 
 void BookSys::select_clear() { slct_book = Book(); }
