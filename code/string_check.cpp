@@ -65,6 +65,10 @@ bool str_check::check_keyword(const std::string &str) {
 
 bool str_check::check_keyword_non_repetition(const std::string &str) {
 
+  if (!check_keyword(str)) {
+    return false;
+  }
+
   if (str.size() > 60) {
     return false;
   }

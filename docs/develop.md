@@ -4,7 +4,7 @@
 ## 主体逻辑：
 ### 头文件：
 - `account.hpp`：管理账户系统
-  - `class Account`：存储在外存中的账户数据打包
+  - `class Account`：账户存储单元
   - `private:`
     - `char name[]`
     - `char id[]`
@@ -14,7 +14,7 @@
     - `bool operator>, <, >=, <=, ==`：基于id字典序顺序插入、删除、查找
     - `Account operator=`：赋值
     - `friend std::ostream &operator<<`：用于打印调试
-  - `class AccountSys`：账户系统
+  - `class AccountSys`：账户系统对象
   - `private:`
     - `List<Account> database`：块状链表类
     - `std::stack<Account> log_stack`：登录栈
@@ -22,6 +22,7 @@
     - `void login / logout / regin / passwd / useradd / erase`：题目要求的相应功能
     - `Level telllvl`：返回登录栈顶账号的权限等级
     - `Account tellacc`：返回登录栈顶账户类
+    - `void print`：用于打印调试
 - `block_list.hpp`：块状链表模板
   - `class Node<T>`：存储在外存中的块的类
     - `public:`
@@ -47,7 +48,7 @@
     - `std::string text`：指令原始文本
   - `public:`
     - `void execute`：根据指令文本执行对应操作
-  - `class CommandSys`：指令系统
+  - `class CommandSys`：指令系统对象
   - `private`:
     - `Command latest_command`：最新的输入指令
   - `public`:
@@ -57,5 +58,34 @@
   - `bool num_letter_underscore`：仅含数字、字母、下划线
   - `bool non_invisible`：除不可见字符外的ASCII字符集
   - `bool non_invisible_quotes`：除不可见字符及英文双引号外的ASCII字符集
+  - `bool check_keyword`：检查关键词合法性（是否存在空词）
+  - `bool check_keyword_non_repetition`：检查关键词合法性（是否存在空词&重复词）
+  - `bool check_int`：检查是否符合整型输入要求
+  - `bool check_float`：检查是否符合实型输入要求
+  - `std::string trim`：去除字符串头尾空格
+- `book.hpp`：书籍系统
+  - `class Book`：书籍存储单元
+  - `public:`
+    - `char isbn[]`
+    - `char name[]`
+    - `char author[]`
+    - `char keyword[]`
+    - `int quantity`
+    - `double price`
+    - `double total_cost`
+    - `bool operator>, <, >=, <=, ==`
+    - `Book operator=`
+    - `friend std::ostream &operator<<`
+  - `class BookSys`：书籍系统对象
+  - `private:`
+    - `List<Book> database_isbn`：以ISBN为key的块状链表
+    - `Book slct_book`：当前选择的书籍
+  - `public:`
+    - `void show / buy / select / modify / import`
+    - `void select_clear`：清除选择书籍
+    - `Book select_book`：返回选择书籍
+- `diary.hpp`：目前为空，计划用于构建日志系统
+  - *TODO*
 ### 存储：
 - `accounts.dat`：存储账户信息
+- `books_ISBN.dat`：以ISBN为key存储书籍信息

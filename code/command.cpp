@@ -181,7 +181,8 @@ void Command::execute() {
 
       str = tok.substr(10, tok.size() - 11);
       type = 4;
-      if (str == "" || str.size() > 60 || !str_check::check_keyword(str)) {
+      if (str == "" || str.size() > 60 ||
+          !str_check::check_keyword_non_repetition(str)) {
         throw 0;
         return;
       }
@@ -298,7 +299,7 @@ void Command::execute() {
 
         keyword = tok.substr(10, tok.size() - 11);
         if (keyword == "" || keyword.size() > 60 ||
-            !str_check::check_keyword(keyword)) {
+            !str_check::check_keyword_non_repetition(keyword)) {
           throw 0;
           return;
         }
