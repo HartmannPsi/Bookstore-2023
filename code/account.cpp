@@ -82,7 +82,6 @@ void AccountSys::login(const std::string &id, const std::string &password) {
     if (current_acc.prev > acc.prev) {
 
       log_stack.push(acc);
-      books.select_clear();
     } else {
 
       throw 0;
@@ -94,7 +93,6 @@ void AccountSys::login(const std::string &id, const std::string &password) {
     const int res = strcmp(password.c_str(), acc.password);
     if (res == 0) {
       log_stack.push(acc);
-      books.select_clear();
     } else {
 
       throw 0;
@@ -109,7 +107,6 @@ void AccountSys::logout() {
     return;
   } else {
     log_stack.pop();
-    books.select_clear();
   }
 } // prev = 1
 
@@ -197,15 +194,9 @@ void AccountSys::erase(const std::string id) {
     return;
   }
 
-  auto tmp_stack(log_stack);
-
-  while (!tmp_stack.empty()) {
-    const auto &log_acc = tmp_stack.top();
-    if (log_acc == acc) {
-      throw 0;
-      return;
-    }
-    tmp_stack.pop();
+  if (log_stack.check_acc(acc)) {
+    throw 0;
+    return;
   }
 
   database.erase(acc);
@@ -216,3 +207,50 @@ Level AccountSys::telllvl() const { return log_stack.top().prev; }
 Account AccountSys::tellacc() const { return log_stack.top(); }
 
 void AccountSys::print() { database.print(); }
+
+Book &AccountSys::slct_book() { return log_stack.slct_book(); }
+
+void AccountSys::modify(const Book &val_old, const Book &val_new) {
+  log_stack.modify(val_old, val_new);
+}
+
+void LogStack::push(const Account &acc) {
+
+  if (!(acc_stack.size() % 100)) {
+    acc_stack.reserve(100);
+    book_stack.reserve(100);
+  }
+  acc_stack.push_back(acc);
+  book_stack.push_back(Book());
+}
+
+void LogStack::select(const Book &book) { book_stack.back() = book; }
+
+bool LogStack::check_acc(const Account &acc) const {
+  for (int i = 0; i != acc_stack.size(); ++i) {
+    if (acc_stack[i] == acc) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+void LogStack::pop() {
+  acc_stack.pop_back();
+  book_stack.pop_back();
+}
+
+Account LogStack::top() const { return acc_stack.back(); }
+
+int LogStack::size() const { return acc_stack.size(); }
+
+Book &LogStack::slct_book() { return book_stack.back(); }
+
+void LogStack::modify(const Book &val_old, const Book &val_new) {
+  for (int i = 0; i != book_stack.size(); ++i) {
+    if (book_stack[i] == val_old) {
+      book_stack[i] = val_new;
+    }
+  }
+}

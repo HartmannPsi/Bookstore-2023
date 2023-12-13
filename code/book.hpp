@@ -11,6 +11,7 @@
 #include <string>
 
 class AccountSys;
+class LogStack;
 
 extern AccountSys accounts;
 
@@ -55,7 +56,7 @@ private:
   List<Book> database_isbn;
   MultiList index_name;
   MultiList index_author;
-  Book slct_book;
+  // Book slct_book;
 
 public:
   BookSys();
@@ -76,7 +77,7 @@ public:
 
   void select_clear();
 
-  Book select_book();
+  Book &select_book();
 
   void print_id_name();
 

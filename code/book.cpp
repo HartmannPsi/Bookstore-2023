@@ -75,8 +75,8 @@ std::ostream &operator<<(std::ostream &op, const Book &rhs) {
 }
 
 BookSys::BookSys()
-    : slct_book(), database_isbn("books_ISBN.dat"),
-      index_author("index_author.dat"), index_name("index_name.dat") {}
+    : database_isbn("books_ISBN.dat"), index_author("index_author.dat"),
+      index_name("index_name.dat") {}
 
 void BookSys::show(const int &type, const std::string &str) {
 
@@ -175,6 +175,7 @@ void BookSys::buy(const std::string &isbn, const int &quantity) {
   std::cout << std::fixed << std::setprecision(2) << quantity * buy_book.price
             << '\n';
   database_isbn.update(buy_book);
+  accounts.modify(buy_book, buy_book);
 }
 
 void BookSys::select(const std::string &isbn) {
@@ -184,6 +185,7 @@ void BookSys::select(const std::string &isbn) {
     return;
   }
 
+  Book &slct_book = select_book();
   slct_book = database_isbn.find(Book(isbn));
   if (strlen(slct_book.isbn) == 0) {
     strcpy(slct_book.isbn, isbn.c_str());
@@ -194,6 +196,8 @@ void BookSys::select(const std::string &isbn) {
 void BookSys::modify(const std::string &isbn, const std::string &name,
                      const std::string &author, const std::string &keyword,
                      double price) {
+
+  auto &slct_book = select_book();
 
   if (accounts.telllvl() < 3) {
     throw 0;
@@ -269,6 +273,8 @@ void BookSys::modify(const std::string &isbn, const std::string &name,
 
     database_isbn.update(slct_book);
   }
+
+  accounts.modify(book_tmp, slct_book);
 }
 
 void BookSys::import(const int &quantity, const double &total_cost) {
@@ -278,14 +284,18 @@ void BookSys::import(const int &quantity, const double &total_cost) {
     return;
   }
 
+  auto &slct_book = select_book();
+
   slct_book.quantity += quantity;
   slct_book.total_cost += total_cost;
   database_isbn.update(slct_book);
+
+  accounts.modify(slct_book, slct_book);
 }
 
-void BookSys::select_clear() { slct_book = Book(); }
+void BookSys::select_clear() { select_book() = Book(); }
 
-Book BookSys::select_book() { return slct_book; }
+Book &BookSys::select_book() { return accounts.slct_book(); }
 
 void BookSys::print_id_name() { index_name.print(); }
 

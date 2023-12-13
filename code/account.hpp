@@ -8,8 +8,10 @@
 #include <ostream>
 #include <stack>
 #include <string>
+#include <vector>
 
 class BookSys;
+class Book;
 
 extern BookSys books;
 
@@ -46,10 +48,36 @@ public:
   friend std::ostream &operator<<(std::ostream &op, const Account &rhs);
 };
 
+class LogStack {
+public:
+  std::vector<Account> acc_stack;
+  std::vector<Book> book_stack;
+
+  LogStack() = default;
+
+  ~LogStack() = default;
+
+  void push(const Account &acc);
+
+  void select(const Book &book);
+
+  bool check_acc(const Account &acc) const;
+
+  void pop();
+
+  Account top() const;
+
+  int size() const;
+
+  Book &slct_book();
+
+  void modify(const Book &val_old, const Book &val_new);
+};
+
 class AccountSys {
 private:
   List<Account> database;
-  std::stack<Account> log_stack;
+  LogStack log_stack;
 
 public:
   AccountSys();
@@ -76,6 +104,10 @@ public:
   Level telllvl() const; // prev = 0
 
   Account tellacc() const;
+
+  Book &slct_book();
+
+  void modify(const Book &val_old, const Book &val_new);
 
   void print();
 };
