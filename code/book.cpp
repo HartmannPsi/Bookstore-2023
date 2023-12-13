@@ -76,7 +76,7 @@ std::ostream &operator<<(std::ostream &op, const Book &rhs) {
 
 BookSys::BookSys()
     : database_isbn("books_ISBN.dat"), index_author("index_author.dat"),
-      index_name("index_name.dat") {}
+      index_name("index_name.dat"), index_keyword("index_keword.dat") {}
 
 void BookSys::show(const int &type, const std::string &str) {
 
@@ -154,6 +154,30 @@ void BookSys::show(const int &type, const std::string &str) {
     delete indexes;
 
   } else if (type == 4) { // keyword
+
+    auto *const indexes = index_keyword.get(Index(str));
+
+    if (indexes->empty()) {
+      std::cout << '\n';
+    } else {
+
+      std::vector<Book> ans;
+      ans.resize(indexes->size());
+
+      for (auto i = 0; i != indexes->size(); ++i) {
+
+        const std::string isbn((*indexes)[i].isbn);
+        ans[i] = database_isbn.find(Book(isbn));
+      }
+
+      std::sort(ans.begin(), ans.end());
+
+      for (auto i = ans.cbegin(); i != ans.cend(); ++i) {
+        std::cout << *i;
+      }
+    }
+
+    delete indexes;
   }
 }
 
@@ -259,6 +283,22 @@ void BookSys::modify(const std::string &isbn, const std::string &name,
 
   if (keyword != "") {
     strcpy(slct_book.keyword, keyword.c_str());
+    char keywords_old[61], keywords_new[61];
+    const char *delim = "|";
+    strcpy(keywords_old, book_tmp.keyword);
+    strcpy(keywords_new, slct_book.keyword);
+
+    auto tok = strtok(keywords_old, delim);
+    while (tok != nullptr) {
+      index_keyword.erase(Index(tok, slct_book.isbn));
+      tok = strtok(nullptr, delim);
+    }
+
+    tok = strtok(keywords_new, delim);
+    while (tok != nullptr) {
+      index_keyword.insert(Index(tok, slct_book.isbn));
+      tok = strtok(nullptr, delim);
+    }
   }
 
   if (price >= 0.0) {
@@ -300,6 +340,8 @@ Book &BookSys::select_book() { return accounts.slct_book(); }
 void BookSys::print_id_name() { index_name.print(); }
 
 void BookSys::print_id_author() { index_author.print(); }
+
+void BookSys::print_id_keyword() { index_keyword.print(); }
 
 Index::Index(const std::string &index_, const std::string &isbn_) {
   strcpy(index, index_.c_str());

@@ -361,6 +361,8 @@ void Command::execute() {
     books.print_id_name();
   } else if (comtype == "show_index_author") {
     books.print_id_author();
+  } else if (comtype == "show_index_keyword") {
+    books.print_id_keyword();
   } else {
     throw 0;
     return;

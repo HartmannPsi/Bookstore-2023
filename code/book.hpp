@@ -56,6 +56,7 @@ private:
   List<Book> database_isbn;
   MultiList index_name;
   MultiList index_author;
+  MultiList index_keyword;
   // Book slct_book;
 
 public:
@@ -82,6 +83,8 @@ public:
   void print_id_name();
 
   void print_id_author();
+
+  void print_id_keyword();
 
   /*
 switch (type) {
