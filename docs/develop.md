@@ -11,7 +11,7 @@
     - `char password[]`
     - `Level prev`
   - `public:`
-    - `bool operator>, <, >=, <=, ==`：基于id字典序顺序插入、删除、查找
+    - `bool operator>, <, >=, <=, ==`：基于`id`字典序顺序插入、删除、查找
     - `Account operator=`：赋值
     - `friend std::ostream &operator<<`：用于打印调试
   - `class AccountSys`：账户系统对象
@@ -37,12 +37,24 @@
     - `const unsigned long SIZE`：每个块所占空间大小
   - `public:`
     - `void insert`：功能见前置作业
-    - `void erase`：功能见前置作业
+    - `virtual void erase`：功能见前置作业
     - `std::vector<T> *get`：功能见前置作业
-    - `unsigned long count`：返回字典序与val相同的元素个数
-    - `T find`：返回字典序与val相同的一个元素
-    - `void update`：将字典序与val相同的一个元素修改为val
+    - `unsigned long count`：返回字典序与`val`相同的元素个数
+    - `T find`：返回字典序与`val`相同的一个元素
+    - `virtual bool update`：将字典序与`val`相同的一个元素修改为`val`
     - `void print`：用于打印调试
+  - `class Index`：索引储存单元
+  - `public:`
+    - `char index[]`
+    - `char isbn[]`
+    - `bool operator<, >, <=, >=, ==`
+    - `Index operator=`
+    - `friend std::ostream &operator<<`
+    - `friend bool strictly_equal`：如果两个元素的key和value都相同，则返回true，否则返回false
+  - `class MultiList: public List<Index>`：对`Index`类进行存储的特化块状链表类
+  - `public:`
+    - `void erase`：删除与`val`完全相同的值（`strictly_equal`）
+    - `bool update`：将与`val_old`完全相同的值更改为`val_new`，若不存在这样的值则直接插入`val_new`
 - `command.hpp`：接受、检查输入&调用相应接口
   - `class Command`：实现单条指令功能的类
   - `private:`
@@ -79,17 +91,21 @@
     - `friend std::ostream &operator<<`
   - `class BookSys`：书籍系统对象
   - `private:`
-    - `List<Book> database_isbn`：以ISBN为key的块状链表
+    - `List<Book> database_isbn`：以`ISBN`为`key`的块状链表
     - `Book slct_book`：当前选择的书籍
   - `public:`
     - `void show / buy / select / modify / import`
     - `void select_clear`：清除选择书籍
     - `Book select_book`：返回选择书籍
+    - `void print_id_name`：将`index_name`中元素按字典序打印调试
+    - `void print_id_author`：将`index_author`中元素按字典序打印调试
 - `diary.hpp`：目前为空，计划用于构建日志系统
   - *TODO*
 ### 存储：
 - `accounts.dat`：存储账户信息
-- `books_ISBN.dat`：以ISBN为key存储书籍信息
+- `books_ISBN.dat`：以`ISBN`为`key`存储书籍信息
+- `index_name.dat`：以`name`为索引储存`ISBN`信息
+- `index_author.dat`：以`author`为索引储存`ISBN`信息
 
 
 TODO:重构登入栈
