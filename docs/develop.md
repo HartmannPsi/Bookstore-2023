@@ -14,15 +14,29 @@
     - `bool operator>, <, >=, <=, ==`：基于`id`字典序顺序插入、删除、查找
     - `Account operator=`：赋值
     - `friend std::ostream &operator<<`：用于打印调试
+  - `class LogStack`：底层使用`std::vector`模拟登入栈的行为
+  - `public:`
+    - `std::vector<Account> acc_stack`
+    - `std::vector<Book> book_stack`
+    - `void push`：登入账户
+    - `void select`：当前账户选书
+    - `bool check_acc`：检查栈中是否存在与`acc`字典序相同的账户
+    - `void pop`：登出账户
+    - `Account top`：当前账户
+    - `int size`：登入栈大小
+    - `Book &slct_book`：当前选择书籍
+    - `void modify`：将栈中所有与`val_old`相同的值修改为`val_new`
   - `class AccountSys`：账户系统对象
   - `private:`
     - `List<Account> database`：块状链表类
-    - `std::stack<Account> log_stack`：登录栈
+    - `LogStack log_stack`：登录栈
   - `public:`
     - `void login / logout / regin / passwd / useradd / erase`：题目要求的相应功能
     - `Level telllvl`：返回登录栈顶账号的权限等级
     - `Account tellacc`：返回登录栈顶账户类
     - `void print`：用于打印调试
+    - `Book &slct_book`
+    - `void modify`
 - `block_list.hpp`：块状链表模板
   - `class Node<T>`：存储在外存中的块的类
     - `public:`
@@ -106,6 +120,3 @@
 - `books_ISBN.dat`：以`ISBN`为`key`存储书籍信息
 - `index_name.dat`：以`name`为索引储存`ISBN`信息
 - `index_author.dat`：以`author`为索引储存`ISBN`信息
-
-
-TODO:重构登入栈
