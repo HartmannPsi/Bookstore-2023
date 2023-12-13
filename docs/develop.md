@@ -106,13 +106,16 @@
   - `class BookSys`：书籍系统对象
   - `private:`
     - `List<Book> database_isbn`：以`ISBN`为`key`的块状链表
-    - `Book slct_book`：当前选择的书籍
+    - `MultiList index_name`
+    - `MultiList index_author`
+    - `MultiList index_keyword`
   - `public:`
     - `void show / buy / select / modify / import`
     - `void select_clear`：清除选择书籍
     - `Book select_book`：返回选择书籍
     - `void print_id_name`：将`index_name`中元素按字典序打印调试
     - `void print_id_author`：将`index_author`中元素按字典序打印调试
+    - `void print_id_keyword`：将`index_keyword`中元素按字典序打印调试
 - `diary.hpp`：目前为空，计划用于构建日志系统
   - *TODO*
 ### 存储：
@@ -120,3 +123,4 @@
 - `books_ISBN.dat`：以`ISBN`为`key`存储书籍信息
 - `index_name.dat`：以`name`为索引储存`ISBN`信息
 - `index_author.dat`：以`author`为索引储存`ISBN`信息
+- `index_keyword.dat`：以`keyword`为索引储存`ISBN`信息
