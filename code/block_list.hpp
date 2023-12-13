@@ -1,12 +1,14 @@
 #pragma once
-#include <istream>
+#include <ostream>
 #ifndef BLOCK_LIST_HPP
 #define BLOCK_LIST_HPP
+#define DEBUG
 
 #include <algorithm>
 #include <cstring>
 #include <fstream>
 #include <iostream>
+#include <istream>
 #include <string>
 #include <vector>
 
@@ -15,6 +17,34 @@ using ul = unsigned long;
 constexpr ul sqN = 450;      // sqrt(N)
 constexpr ul MAX = 1l << 16; // buffer size
 // constexpr ul SIZE = 4096 * 8; // bigger than sizeof(Node<T>), times of 4096
+
+class Index {
+public:
+  char index[61] = "";
+  char isbn[21] = "";
+
+  Index() = default;
+
+  ~Index() = default;
+
+  Index(const std::string &index_, const std::string &isbn_ = "");
+
+  bool operator>(const Index &rhs) const;
+
+  bool operator<(const Index &rhs) const;
+
+  bool operator>=(const Index &rhs) const;
+
+  bool operator<=(const Index &rhs) const;
+
+  bool operator==(const Index &rhs) const;
+
+  Index operator=(const Index &rhs);
+
+  friend std::ostream &operator<<(std::ostream &op, const Index &rhs);
+
+  friend bool strictly_equal(const Index &lhs, const Index &rhs);
+};
 
 class Data {
 public:
@@ -85,7 +115,7 @@ public:
 };
 
 template <class T> class List {
-private:
+protected:
   std::string file_name = "data";
   std::fstream file;
   ul end = 0;    // sqrt(N)
@@ -214,7 +244,8 @@ public:
     }
   }
 
-  void erase(const T &val) { //删除字典序与val相同的值，如果有多个则全部删除
+  virtual void
+  erase(const T &val) { //删除字典序与val相同的值，如果有多个则全部删除
 
     ul pos = 0;
     Node<T> block;
@@ -249,9 +280,10 @@ public:
     } while (pos != 0);
   }
 
-  void
-  update(const T &val) { // 将字典序与val相同的元素修改为val，若不存在则无操作
-                         // 仅适用于无重复元素的情况
+  virtual bool update(
+      const T &
+          val) { // 将字典序与val相同的元素修改为val并返回true，若不存在则无操作并返回false
+                 // 仅适用于无重复元素的情况
 
     ul pos = 0;
     Node<T> block;
@@ -273,12 +305,14 @@ public:
         if (is_found) {
           file.seekp(pos);
           write(block);
-          return;
+          return true;
         }
       }
 
       pos = block.next;
     } while (pos != 0);
+
+    return false;
   }
 
   std::vector<T> *get(const T &val) {
@@ -315,7 +349,7 @@ public:
       pos = block.next;
     }
 
-    sort(ans->begin(), ans->end());
+    // sort(ans->begin(), ans->end());
     return ans;
   }
 
@@ -419,7 +453,24 @@ public:
     remove(file_name.c_str());
   }
 
-  ~List() { file.close(); }
+  virtual ~List() {
+    file.close();
+#ifdef DEBUG
+    std::remove(file_name.c_str());
+#endif
+  }
+};
+
+class MultiList : public List<Index> {
+public:
+  void erase(const Index &val); //删除与val完全相同的值
+
+  bool update(const Index &val_old,
+              const Index &val_new); //更新与val_old完全相同的值，若不存在则插入
+
+  MultiList(const std::string name);
+
+  ~MultiList() = default;
 };
 
 #endif

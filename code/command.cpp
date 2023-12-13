@@ -357,6 +357,10 @@ void Command::execute() {
 
   } else if (comtype == "current_book") {
     std::cout << books.select_book();
+  } else if (comtype == "show_index_name") {
+    books.print_id_name();
+  } else if (comtype == "show_index_author") {
+    books.print_id_author();
   } else {
     throw 0;
     return;

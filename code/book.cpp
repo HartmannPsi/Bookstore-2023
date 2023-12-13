@@ -1,4 +1,5 @@
 #include "book.hpp"
+#include "block_list.hpp"
 #include <cstring>
 #include <iomanip>
 
@@ -73,7 +74,9 @@ std::ostream &operator<<(std::ostream &op, const Book &rhs) {
   return op;
 }
 
-BookSys::BookSys() : slct_book(), database_isbn("books_ISBN.dat") {}
+BookSys::BookSys()
+    : slct_book(), database_isbn("books_ISBN.dat"),
+      index_author("index_author.dat"), index_name("index_name.dat") {}
 
 void BookSys::show(const int &type, const std::string &str) {
 
@@ -82,12 +85,13 @@ void BookSys::show(const int &type, const std::string &str) {
     return;
   }
 
-  if (type == 0) {
+  if (type == 0) { // all
 
     database_isbn.print();
-  } else if (type == 1) {
+  } else if (type == 1) { // isbn
 
     auto *const ans = database_isbn.get(Book(str));
+
     if (ans->empty()) {
       std::cout << '\n';
     } else {
@@ -97,11 +101,59 @@ void BookSys::show(const int &type, const std::string &str) {
     }
     delete ans;
 
-  } else if (type == 2) {
+  } else if (type == 2) { // name
 
-  } else if (type == 3) {
+    auto *const indexes = index_name.get(Index(str));
 
-  } else if (type == 4) {
+    if (indexes->empty()) {
+      std::cout << '\n';
+    } else {
+
+      std::vector<Book> ans;
+      ans.resize(indexes->size());
+
+      for (auto i = 0; i != indexes->size(); ++i) {
+
+        const std::string isbn((*indexes)[i].isbn);
+        ans[i] = database_isbn.find(Book(isbn));
+      }
+
+      std::sort(ans.begin(), ans.end());
+
+      for (auto i = ans.cbegin(); i != ans.cend(); ++i) {
+        std::cout << *i;
+      }
+    }
+
+    delete indexes;
+
+  } else if (type == 3) { // author
+
+    auto *const indexes = index_author.get(Index(str));
+
+    if (indexes->empty()) {
+      std::cout << '\n';
+    } else {
+
+      std::vector<Book> ans;
+      ans.resize(indexes->size());
+
+      for (auto i = 0; i != indexes->size(); ++i) {
+
+        const std::string isbn((*indexes)[i].isbn);
+        ans[i] = database_isbn.find(Book(isbn));
+      }
+
+      std::sort(ans.begin(), ans.end());
+
+      for (auto i = ans.cbegin(); i != ans.cend(); ++i) {
+        std::cout << *i;
+      }
+    }
+
+    delete indexes;
+
+  } else if (type == 4) { // keyword
   }
 }
 
@@ -165,24 +217,58 @@ void BookSys::modify(const std::string &isbn, const std::string &name,
     return;
   }
 
+  const auto book_tmp = slct_book;
+  bool is_isbn_changed = false;
+
   if (isbn != "") {
+
+    const Index id_name_old(book_tmp.name, book_tmp.isbn),
+        id_author_old(book_tmp.author, book_tmp.isbn);
+
     strcpy(slct_book.isbn, isbn.c_str());
+
+    const Index id_name_new(book_tmp.name, slct_book.isbn),
+        id_author_new(book_tmp.author, slct_book.isbn);
+
+    index_name.update(id_name_old, id_name_new);
+    index_author.update(id_author_old, id_author_new);
+    is_isbn_changed = true;
   }
+
   if (name != "") {
 
     strcpy(slct_book.name, name.c_str());
+    Index id_name(book_tmp.name, slct_book.isbn);
+    index_name.erase(id_name);
+    strcpy(id_name.index, slct_book.name);
+    index_name.insert(id_name);
   }
+
   if (author != "") {
+
     strcpy(slct_book.author, author.c_str());
+    Index id_author(book_tmp.author, slct_book.isbn);
+    index_author.erase(id_author);
+    strcpy(id_author.index, slct_book.author);
+    index_author.insert(id_author);
   }
+
   if (keyword != "") {
     strcpy(slct_book.keyword, keyword.c_str());
   }
+
   if (price >= 0.0) {
     slct_book.price = price;
   }
 
-  database_isbn.update(slct_book);
+  if (is_isbn_changed) {
+
+    database_isbn.erase(book_tmp);
+    database_isbn.insert(slct_book);
+  } else {
+
+    database_isbn.update(slct_book);
+  }
 }
 
 void BookSys::import(const int &quantity, const double &total_cost) {
@@ -200,3 +286,60 @@ void BookSys::import(const int &quantity, const double &total_cost) {
 void BookSys::select_clear() { slct_book = Book(); }
 
 Book BookSys::select_book() { return slct_book; }
+
+void BookSys::print_id_name() { index_name.print(); }
+
+void BookSys::print_id_author() { index_author.print(); }
+
+Index::Index(const std::string &index_, const std::string &isbn_) {
+  strcpy(index, index_.c_str());
+  strcpy(isbn, isbn_.c_str());
+}
+
+bool Index::operator>(const Index &rhs) const {
+  const int res = strcmp(index, rhs.index);
+  return res > 0;
+}
+
+bool Index::operator<(const Index &rhs) const {
+  const int res = strcmp(index, rhs.index);
+  return res < 0;
+}
+
+bool Index::operator>=(const Index &rhs) const {
+  const int res = strcmp(index, rhs.index);
+  return res >= 0;
+}
+
+bool Index::operator<=(const Index &rhs) const {
+  const int res = strcmp(index, rhs.index);
+  return res <= 0;
+}
+
+bool Index::operator==(const Index &rhs) const {
+  const int res = strcmp(index, rhs.index);
+  return res == 0;
+}
+
+Index Index::operator=(const Index &rhs) {
+
+  if (this == &rhs) {
+    return *this;
+  }
+
+  strcpy(index, rhs.index);
+  strcpy(isbn, rhs.isbn);
+
+  return *this;
+}
+
+std::ostream &operator<<(std::ostream &op, const Index &rhs) {
+  op << rhs.index << '\t' << rhs.isbn << '\n';
+  return op;
+}
+
+bool strictly_equal(const Index &lhs, const Index &rhs) {
+  const int res1 = strcmp(lhs.index, rhs.index),
+            res2 = strcmp(lhs.isbn, rhs.isbn);
+  return res1 == 0 && res2 == 0;
+}

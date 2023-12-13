@@ -53,6 +53,8 @@ public:
 class BookSys {
 private:
   List<Book> database_isbn;
+  MultiList index_name;
+  MultiList index_author;
   Book slct_book;
 
 public:
@@ -75,6 +77,10 @@ public:
   void select_clear();
 
   Book select_book();
+
+  void print_id_name();
+
+  void print_id_author();
 
   /*
 switch (type) {

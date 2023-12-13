@@ -17,7 +17,8 @@ int main() {
       std::cout << text << ": \n";
       commands.read(text);
       commands.execute();
-      std::cout << "\n";
+      std::cout << "-----------------------------------------------------------"
+                   "---------\n";
 
     } catch (int) {
       std::cout << "Invalid\n"
