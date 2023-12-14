@@ -3,7 +3,7 @@
 #define ACCOUNT_HPP
 
 #include "block_list.hpp"
-#include "book.hpp"
+//#include "book.hpp"
 #include "diary.hpp"
 #include <cstring>
 #include <ostream>
@@ -13,6 +13,7 @@
 
 class BookSys;
 class Book;
+// class AccountSys;
 
 extern BookSys books;
 

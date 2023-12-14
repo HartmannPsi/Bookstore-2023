@@ -2,7 +2,8 @@
 #ifndef BOOK_HPP
 #define BOOK_HPP
 
-#include "account.hpp"
+class BookSys;
+
 #include "block_list.hpp"
 #include "diary.hpp"
 #include <cstring>
@@ -15,7 +16,8 @@ class AccountSys;
 class LogStack;
 
 extern AccountSys accounts;
-extern Linear finances;
+extern Finance finances;
+extern Report<Alteration> financials;
 
 class Book {
 public:

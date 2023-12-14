@@ -1,5 +1,6 @@
 #include "book.hpp"
 #include "block_list.hpp"
+#include "diary.hpp"
 #include <cstring>
 #include <iomanip>
 
@@ -199,6 +200,10 @@ void BookSys::buy(const std::string &isbn, const int &quantity) {
   database_isbn.update(buy_book);
   accounts.modify(buy_book, buy_book);
   finances.write(quantity * buy_book.price);
+
+  const Alteration val(accounts.tellacc().id, buy_book.isbn, false, quantity,
+                       quantity * buy_book.price);
+  financials.write(val);
 }
 
 void BookSys::select(const std::string &isbn) {
@@ -335,6 +340,9 @@ void BookSys::import(const int &quantity, const double &total_cost) {
 
   accounts.modify(slct_book, slct_book);
   finances.write(-total_cost);
+  const Alteration val(accounts.tellacc().id, slct_book.isbn, true, quantity,
+                       total_cost);
+  financials.write(val);
 }
 
 void BookSys::select_clear() { select_book() = Book(); }

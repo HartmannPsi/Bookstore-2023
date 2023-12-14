@@ -1,9 +1,12 @@
 #include "command.hpp"
 #include "book.hpp"
+#include "diary.hpp"
 #include "string_check.hpp"
 #include <iomanip>
 #include <sstream>
 #include <string>
+
+extern Report<WorkerLog> workers;
 
 Command::Command(const std::string &str) : text(str) {}
 
@@ -379,6 +382,29 @@ void Command::execute() {
     }
 
     books.import(stoi(quantity), std::stod(total_cost));
+
+  } else if (comtype == "report") {
+
+    std::string type;
+    in >> type;
+
+    if (!in.eof()) {
+      throw 0;
+      return;
+    }
+
+    if (type == "finance") {
+
+      financials.execute();
+
+    } else if (type == "employee") {
+
+      workers.execute();
+
+    } else {
+      throw 0;
+      return;
+    }
 
   } else if (comtype == "accounts") {
 
