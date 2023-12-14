@@ -1,7 +1,7 @@
 #pragma once
 #ifndef BLOCK_LIST_HPP
 #define BLOCK_LIST_HPP
-#define DEBUG
+//#define DEBUG
 
 #include <algorithm>
 #include <cstring>

@@ -4,6 +4,7 @@
 
 #include "block_list.hpp"
 #include "book.hpp"
+#include "diary.hpp"
 #include <cstring>
 #include <ostream>
 #include <stack>

@@ -200,6 +200,7 @@ void BookSys::buy(const std::string &isbn, const int &quantity) {
             << '\n';
   database_isbn.update(buy_book);
   accounts.modify(buy_book, buy_book);
+  finances.write(quantity * buy_book.price);
 }
 
 void BookSys::select(const std::string &isbn) {
@@ -336,6 +337,7 @@ void BookSys::import(const int &quantity, const double &total_cost) {
   database_isbn.update(slct_book);
 
   accounts.modify(slct_book, slct_book);
+  finances.write(-total_cost);
 }
 
 void BookSys::select_clear() { select_book() = Book(); }

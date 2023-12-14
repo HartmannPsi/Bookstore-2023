@@ -4,6 +4,7 @@
 
 #include "account.hpp"
 #include "block_list.hpp"
+#include "diary.hpp"
 #include <cstring>
 #include <iomanip>
 #include <iostream>
@@ -14,6 +15,7 @@ class AccountSys;
 class LogStack;
 
 extern AccountSys accounts;
+extern Linear finances;
 
 class Book {
 public:

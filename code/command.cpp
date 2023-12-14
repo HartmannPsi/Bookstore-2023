@@ -1,5 +1,7 @@
 #include "command.hpp"
+#include "book.hpp"
 #include "string_check.hpp"
+#include <iomanip>
 #include <sstream>
 #include <string>
 
@@ -194,6 +196,31 @@ void Command::execute() {
     } else if (tok == "") {
 
       type = 0;
+
+    } else if (tok.substr(0, 7) == "finance") {
+
+      if (tok.size() == 7) {
+        finances.finance();
+      } else {
+
+        std::istringstream tin(tok);
+        std::string s, c;
+        tin >> s >> c;
+        if (!tin.eof()) {
+          throw 0;
+          return;
+        }
+
+        const int count = std::stoi(c);
+        if (count < 0) {
+          throw 0;
+          return;
+        }
+
+        finances.finance(count);
+      }
+
+      return;
 
     } else {
       throw 0;
