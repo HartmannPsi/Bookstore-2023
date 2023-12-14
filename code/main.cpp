@@ -14,20 +14,20 @@ int main() {
     try {
       std::string text;
       getline(std::cin, text);
+#ifdef DEBUG
       std::cout << text << ": \n";
+#endif
       commands.read(text);
       commands.execute();
-      std::cout << "-----------------------------------------------------------"
-                   "---------\n";
 
-    } catch (int) {
-      std::cout << "Invalid\n"
-                << "\n";
-    } catch (std::invalid_argument &e) {
-      std::cout << e.what() << '\n';
-    } catch (std::out_of_range &e) {
-      std::cout << e.what() << '\n';
+    } catch (...) {
+      std::cout << "Invalid\n";
+      //          << "\n";
     }
+#ifdef DEBUG
+    std::cout << "-----------------------------------------------------------"
+                 "---------\n";
+#endif
   }
 
   return 0;

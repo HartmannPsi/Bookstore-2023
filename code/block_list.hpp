@@ -1,5 +1,4 @@
 #pragma once
-#include <ostream>
 #ifndef BLOCK_LIST_HPP
 #define BLOCK_LIST_HPP
 #define DEBUG
@@ -9,6 +8,7 @@
 #include <fstream>
 #include <iostream>
 #include <istream>
+#include <ostream>
 #include <string>
 #include <vector>
 

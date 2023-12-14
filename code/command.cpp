@@ -7,6 +7,8 @@ Command::Command(const std::string &str) : text(str) {}
 
 void Command::execute() {
 
+  text = str_check::trim(text);
+
   std::istringstream in(text);
   std::string comtype;
   in >> comtype;
@@ -21,7 +23,7 @@ void Command::execute() {
       return;
     }
 
-    if (id.size() > 30 || password.size() > 30 ||
+    if (password == "" || id == "" || id.size() > 30 || password.size() > 30 ||
         !str_check::num_letter_underscore(id) ||
         !str_check::num_letter_underscore(password)) {
       throw 0;
@@ -49,7 +51,8 @@ void Command::execute() {
       return;
     }
 
-    if (id.size() > 30 || password.size() > 30 || name.size() > 30 ||
+    if (name == "" || password == "" || id == "" || id.size() > 30 ||
+        password.size() > 30 || name.size() > 30 ||
         !str_check::num_letter_underscore(id) ||
         !str_check::num_letter_underscore(password) ||
         !str_check::non_invisible(name)) {
@@ -69,8 +72,8 @@ void Command::execute() {
       return;
     }
 
-    if (id.size() > 30 || passwd1.size() > 30 || passwd2.size() > 30 ||
-        !str_check::num_letter_underscore(id) ||
+    if (passwd1 == "" || id == "" || id.size() > 30 || passwd1.size() > 30 ||
+        passwd2.size() > 30 || !str_check::num_letter_underscore(id) ||
         !str_check::num_letter_underscore(passwd1) ||
         !str_check::num_letter_underscore(passwd2)) {
       throw 0;
@@ -94,7 +97,8 @@ void Command::execute() {
       return;
     }
 
-    if (id.size() > 30 || password.size() > 30 || name.size() > 30 ||
+    if (name == "" || password == "" || id == "" || id.size() > 30 ||
+        password.size() > 30 || name.size() > 30 ||
         !str_check::num_letter_underscore(id) ||
         !str_check::num_letter_underscore(password) ||
         !str_check::non_invisible(name)) {
@@ -119,7 +123,7 @@ void Command::execute() {
       return;
     }
 
-    if (id.size() > 30 || !str_check::num_letter_underscore(id)) {
+    if (id == "" || id.size() > 30 || !str_check::num_letter_underscore(id)) {
       throw 0;
       return;
     }
@@ -313,8 +317,7 @@ void Command::execute() {
         }
 
         price = tok.substr(7, tok.size() - 7);
-        if (price == "" || price.size() > 13 ||
-            !str_check::check_float(price)) {
+        if (price == "" || price.size() > 13) {
           throw 0;
           return;
         }
@@ -339,8 +342,7 @@ void Command::execute() {
     }
 
     if (quantity.size() > 10 || total_cost.size() > 13 ||
-        !str_check::check_int(quantity) ||
-        !str_check::check_float(total_cost)) {
+        !str_check::check_int(quantity)) {
       throw 0;
       return;
     }
