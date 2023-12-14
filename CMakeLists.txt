@@ -17,13 +17,13 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 
 # create a variable which includes needed source files
 set(MY_SOURCES
-    ${PROJECT_SOURCE_DIR}/code/main.cpp
-    ${PROJECT_SOURCE_DIR}/code/account.cpp
-    ${PROJECT_SOURCE_DIR}/code/block_list.cpp
-    ${PROJECT_SOURCE_DIR}/code/command.cpp
-    ${PROJECT_SOURCE_DIR}/code/string_check.cpp
-    ${PROJECT_SOURCE_DIR}/code/book.cpp
-    ${PROJECT_SOURCE_DIR}/code/diary.cpp
+    ${PROJECT_SOURCE_DIR}/src/main.cpp
+    ${PROJECT_SOURCE_DIR}/src/account.cpp
+    ${PROJECT_SOURCE_DIR}/src/block_list.cpp
+    ${PROJECT_SOURCE_DIR}/src/command.cpp
+    ${PROJECT_SOURCE_DIR}/src/string_check.cpp
+    ${PROJECT_SOURCE_DIR}/src/book.cpp
+    ${PROJECT_SOURCE_DIR}/src/diary.cpp
 )
 
 # specify an executable, 
