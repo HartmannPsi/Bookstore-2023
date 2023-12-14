@@ -76,7 +76,7 @@ std::ostream &operator<<(std::ostream &op, const Book &rhs) {
 
 BookSys::BookSys()
     : database_isbn("books_ISBN.dat"), index_author("index_author.dat"),
-      index_name("index_name.dat"), index_keyword("index_keword.dat") {}
+      index_name("index_name.dat"), index_keyword("index_keyword.dat") {}
 
 void BookSys::show(const int &type, const std::string &str) {
 

@@ -64,7 +64,7 @@
     - `bool operator<, >, <=, >=, ==`
     - `Index operator=`
     - `friend std::ostream &operator<<`
-    - `friend bool strictly_equal`：如果两个元素的key和value都相同，则返回true，否则返回false
+    - `friend bool strictly_equal`：如果两个元素的`key`和`value`都相同，则返回`true`，否则返回`false`
   - `class MultiList: public List<Index>`：对`Index`类进行存储的特化块状链表类
   - `public:`
     - `void erase`：删除与`val`完全相同的值（`strictly_equal`）
@@ -117,10 +117,17 @@
     - `void print_id_author`：将`index_author`中元素按字典序打印调试
     - `void print_id_keyword`：将`index_keyword`中元素按字典序打印调试
 - `diary.hpp`：目前为空，计划用于构建日志系统
-  - *TODO*
+  - `class Linear`：线性表类，用于存储财务收支信息
+  - `private:`
+    - `std::string file_name`：文件名
+    - `std::fstream file`：文件读写类
+  - `public:`
+    - `void write`：写入收支信息
+    - `void finance`：实现`show finance`功能
 ### 存储：
 - `accounts.dat`：存储账户信息
 - `books_ISBN.dat`：以`ISBN`为`key`存储书籍信息
 - `index_name.dat`：以`name`为索引储存`ISBN`信息
 - `index_author.dat`：以`author`为索引储存`ISBN`信息
 - `index_keyword.dat`：以`keyword`为索引储存`ISBN`信息
+- `finance.dat`：存储收支信息

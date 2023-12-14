@@ -9,6 +9,10 @@ Command::Command(const std::string &str) : text(str) {}
 
 void Command::execute() {
 
+  if (text == "") {
+    return;
+  }
+
   text = str_check::trim(text);
 
   std::istringstream in(text);
@@ -25,7 +29,7 @@ void Command::execute() {
       return;
     }
 
-    if (password == "" || id == "" || id.size() > 30 || password.size() > 30 ||
+    if (id == "" || id.size() > 30 || password.size() > 30 ||
         !str_check::num_letter_underscore(id) ||
         !str_check::num_letter_underscore(password)) {
       throw 0;

@@ -60,7 +60,7 @@ void Linear::finance(const int &count) {
       if (num > 0.0) {
         plus += num;
       } else {
-        minus += num;
+        minus -= num;
       }
       pos += sizeof(double);
     }
@@ -73,11 +73,11 @@ void Linear::finance(const int &count) {
       if (num > 0.0) {
         plus += num;
       } else {
-        minus += num;
+        minus -= num;
       }
     }
   }
 
   std::cout << "+ " << std::fixed << std::setprecision(2) << plus << " - "
-            << std::fixed << std::setprecision(2) << -minus << '\n';
+            << std::fixed << std::setprecision(2) << minus << '\n';
 }
