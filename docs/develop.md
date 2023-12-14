@@ -116,13 +116,32 @@
     - `void print_id_author`：将`index_author`中元素按字典序打印调试
     - `void print_id_keyword`：将`index_keyword`中元素按字典序打印调试
 - `diary.hpp`：目前为空，计划用于构建日志系统
-  - `class Linear`：线性表类，用于存储财务收支信息
+  - `class Finance`：线性表类，用于存储财务收支信息
   - `private:`
     - `std::string file_name`：文件名
     - `std::fstream file`：文件读写类
   - `public:`
     - `void write`：写入收支信息
     - `void finance`：实现`show finance`功能
+  - `class WorkerLog`：员工工作日志存储单元
+  - `public:`
+    - `char id[]`：员工`id`
+    - `char text[]`：命令原始文本
+    - `bool status`：执行状态
+  - `class Alteration`：财务收支存储单元
+  - `public:`
+    - `char id[]`：执行者`id`
+    - `bool type`：类型（收入/支出）
+    - `char isbn`：书籍
+    - `int count`：数量
+    - `double sum`：总计
+  - `template <class T> class Report`
+  - `private:`
+    - `std::string file_name`
+    - `std::string file`
+  - `public:`
+    - `void write`
+    - `void execute`
 ### 存储：
 - `accounts.dat`：存储账户信息
 - `books_ISBN.dat`：以`ISBN`为`key`存储书籍信息
@@ -130,3 +149,5 @@
 - `index_author.dat`：以`author`为索引储存`ISBN`信息
 - `index_keyword.dat`：以`keyword`为索引储存`ISBN`信息
 - `finance.dat`：存储收支信息
+- `report_finance.dat`：存储财务报表信息
+- `report_worker.dat`：存储员工工作信息

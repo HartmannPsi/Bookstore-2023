@@ -105,67 +105,11 @@ WorkerLog::WorkerLog(const std::string &id_, std::string &text_, bool status_)
   strcpy(text, text_.c_str());
 }
 
-bool WorkerLog::operator>(const WorkerLog &rhs) const {
-  const int res = strcmp(id, rhs.id);
-  return res > 0;
-}
-
-bool WorkerLog::operator<(const WorkerLog &rhs) const {
-  const int res = strcmp(id, rhs.id);
-  return res < 0;
-}
-
-bool WorkerLog::operator>=(const WorkerLog &rhs) const {
-  const int res = strcmp(id, rhs.id);
-  return res >= 0;
-}
-
-bool WorkerLog::operator<=(const WorkerLog &rhs) const {
-  const int res = strcmp(id, rhs.id);
-  return res <= 0;
-}
-
-bool WorkerLog::operator==(const WorkerLog &rhs) const {
-  const int res = strcmp(id, rhs.id);
-  return res == 0;
-}
-
-WorkerLog WorkerLog::operator=(const WorkerLog &rhs) {
-  if (this == &rhs) {
-    return *this;
-  }
-
-  strcpy(id, rhs.id);
-  strcpy(text, rhs.text);
-  status = rhs.status;
-  return *this;
-}
-
 std::ostream &operator<<(std::ostream &op, const WorkerLog &rhs) {
   op << "Worker Id: " << rhs.id << "\tOperation: " << rhs.text
      << "\tStatus: " << (rhs.status ? "Succeeded" : "Failed") << '\n';
   return op;
 }
-
-void WorkerReport::execute() {
-
-  if (accounts.telllvl() != 7) {
-    throw 0;
-    return;
-  }
-
-  std::cout << "==============================================================="
-               "==========================================\n"
-            << "* WORKERS REPORT *\n\n";
-
-  print();
-
-  std::cout << "\n* END *\n"
-            << "==============================================================="
-               "==========================================\n";
-}
-
-WorkerReport::WorkerReport(const std::string &name) : List<WorkerLog>(name) {}
 
 template <> void Report<Alteration>::execute() {
   if (accounts.telllvl() < 7) {

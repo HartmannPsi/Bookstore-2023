@@ -47,18 +47,6 @@ public:
 
   WorkerLog(const std::string &id_, std::string &text_, bool status_);
 
-  bool operator>(const WorkerLog &rhs) const;
-
-  bool operator<(const WorkerLog &rhs) const;
-
-  bool operator>=(const WorkerLog &rhs) const;
-
-  bool operator<=(const WorkerLog &rhs) const;
-
-  bool operator==(const WorkerLog &rhs) const;
-
-  WorkerLog operator=(const WorkerLog &rhs);
-
   friend std::ostream &operator<<(std::ostream &op, const WorkerLog &rhs);
 };
 
@@ -114,13 +102,6 @@ public:
   }
 
   void execute();
-};
-
-class WorkerReport : public List<WorkerLog> {
-public:
-  void execute();
-
-  WorkerReport(const std::string &name);
 };
 
 #endif
