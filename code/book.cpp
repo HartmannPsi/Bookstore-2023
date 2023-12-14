@@ -326,6 +326,11 @@ void BookSys::import(const int &quantity, const double &total_cost) {
 
   auto &slct_book = select_book();
 
+  if (strlen(slct_book.isbn) == 0) {
+    throw 0;
+    return;
+  }
+
   slct_book.quantity += quantity;
   slct_book.total_cost += total_cost;
   database_isbn.update(slct_book);
