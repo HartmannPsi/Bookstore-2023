@@ -99,7 +99,6 @@
     - `char keyword[]`
     - `int quantity`
     - `double price`
-    - `double total_cost`
     - `bool operator>, <, >=, <=, ==`
     - `Book operator=`
     - `friend std::ostream &operator<<`

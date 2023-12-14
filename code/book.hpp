@@ -25,12 +25,10 @@ public:
   char keyword[61] = "";
   int quantity = 0;
   double price = 0.0;
-  double total_cost = 0.0;
 
   Book(const std::string &isbn_, const std::string &name_,
        const std::string &author_, const std::string &keyword_,
-       const int &quantity_ = 0, const double &price_ = 0.0,
-       const double &total_cost_ = 0.0);
+       const int &quantity_ = 0, const double &price_ = 0.0);
 
   Book(const std::string &isbn_);
 

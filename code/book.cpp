@@ -5,9 +5,8 @@
 
 Book::Book(const std::string &isbn_, const std::string &name_,
            const std::string &author_, const std::string &keyword_,
-           const int &quantity_, const double &price_,
-           const double &total_cost_)
-    : quantity(quantity_), price(price_), total_cost(total_cost_) {
+           const int &quantity_, const double &price_)
+    : quantity(quantity_), price(price_) {
   strcpy(isbn, isbn_.c_str());
   strcpy(name, name_.c_str());
   strcpy(author, author_.c_str());
@@ -52,7 +51,6 @@ Book Book::operator=(const Book &rhs) {
   strcpy(keyword, rhs.keyword);
   quantity = rhs.quantity;
   price = rhs.price;
-  total_cost = rhs.total_cost;
 
   return *this;
 }
@@ -333,7 +331,6 @@ void BookSys::import(const int &quantity, const double &total_cost) {
   }
 
   slct_book.quantity += quantity;
-  slct_book.total_cost += total_cost;
   database_isbn.update(slct_book);
 
   accounts.modify(slct_book, slct_book);

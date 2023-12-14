@@ -70,7 +70,6 @@ AccountSys::AccountSys() : database("accounts.dat") {
 void AccountSys::login(const std::string &id, const std::string &password) {
 
   const auto acc = database.find(Account(id));
-  ;
   const auto &current_acc = log_stack.top();
   if (strlen(acc.id) == 0) {
     throw 0;
