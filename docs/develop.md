@@ -135,7 +135,10 @@
     - `char isbn`：书籍
     - `int count`：数量
     - `double sum`：总计
-  - `template <class T> class Report`
+  - `class SysLog`：系统工作日志存储单元
+  - `public:`
+    - `char content[]`：具体内容
+  - `template <class T> class Report`：报表模板类，底层架构为线性表
   - `private:`
     - `std::string file_name`
     - `std::string file`
@@ -151,3 +154,4 @@
 - `finance.dat`：存储收支信息
 - `report_finance.dat`：存储财务报表信息
 - `report_worker.dat`：存储员工工作信息
+- `system_log.dat`：存储系统日志信息
