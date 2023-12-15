@@ -1,6 +1,8 @@
 #include "diary.hpp"
 #include <iomanip>
 
+extern Report<SysLog> logs;
+
 Finance::~Finance() {
   file.close();
 #ifdef DEBUG
@@ -80,6 +82,8 @@ void Finance::finance(const int &count) {
 
   std::cout << "+ " << std::fixed << std::setprecision(2) << plus << " - "
             << std::fixed << std::setprecision(2) << minus << '\n';
+
+  logs.write(SysLog("Finance showed."));
 }
 
 Alteration::Alteration(const std::string &id_, const std::string &isbn_,
@@ -139,6 +143,7 @@ template <> void Report<Alteration>::execute() {
   std::cout << "\n* END *\n"
             << "==============================================================="
                "==========================================\n";
+  logs.write(SysLog("Finance reported."));
 }
 
 template <> void Report<WorkerLog>::execute() {
@@ -169,4 +174,44 @@ template <> void Report<WorkerLog>::execute() {
   std::cout << "\n* END *\n"
             << "==============================================================="
                "==========================================\n";
+  logs.write(SysLog("Worker logs reported."));
+}
+
+template <> void Report<SysLog>::execute() {
+  if (accounts.telllvl() < 7) {
+    throw 0;
+    return;
+  }
+
+  file.seekp(0, std::ios::end);
+  const ul end = file.tellp();
+
+  std::cout << "==============================================================="
+               "==========================================\n"
+            << "* SYSTEM LOG *\n\n";
+  std::cout << (end / sizeof(SysLog)) << " Records:\n";
+
+  ul pos = 0, i = 1;
+  while (pos < end) {
+    SysLog val;
+    file.seekg(pos);
+    file.read(reinterpret_cast<char *>(&val), sizeof(SysLog));
+    std::cout << "Record " << i << ":\t" << val;
+
+    pos += sizeof(SysLog);
+    ++i;
+  }
+
+  std::cout << "\n* END *\n"
+            << "==============================================================="
+               "==========================================\n";
+
+  logs.write(SysLog("System Log showed."));
+}
+
+SysLog::SysLog(const std::string &str) { strcpy(content, str.c_str()); }
+
+std::ostream &operator<<(std::ostream &op, const SysLog &rhs) {
+  op << rhs.content << '\n';
+  return op;
 }

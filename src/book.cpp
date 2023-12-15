@@ -3,6 +3,9 @@
 #include "diary.hpp"
 #include <cstring>
 #include <iomanip>
+#include <string>
+
+extern Report<SysLog> logs;
 
 Book::Book(const std::string &isbn_, const std::string &name_,
            const std::string &author_, const std::string &keyword_,
@@ -87,6 +90,9 @@ void BookSys::show(const int &type, const std::string &str) {
   if (type == 0) { // all
 
     database_isbn.print();
+    std::string s = "Showed all books";
+
+    logs.write(SysLog(s));
   } else if (type == 1) { // isbn
 
     auto *const ans = database_isbn.get(Book(str));
@@ -100,6 +106,9 @@ void BookSys::show(const int &type, const std::string &str) {
     }
     delete ans;
 
+    std::string s = "Showed books with ISBN " + str;
+
+    logs.write(SysLog(s));
   } else if (type == 2) { // name
 
     auto *const indexes = index_name.get(Index(str));
@@ -125,6 +134,10 @@ void BookSys::show(const int &type, const std::string &str) {
     }
 
     delete indexes;
+
+    std::string s = "Showed books with name " + str;
+
+    logs.write(SysLog(s));
 
   } else if (type == 3) { // author
 
@@ -152,6 +165,10 @@ void BookSys::show(const int &type, const std::string &str) {
 
     delete indexes;
 
+    std::string s = "Showed books with author " + str;
+
+    logs.write(SysLog(s));
+
   } else if (type == 4) { // keyword
 
     auto *const indexes = index_keyword.get(Index(str));
@@ -177,6 +194,10 @@ void BookSys::show(const int &type, const std::string &str) {
     }
 
     delete indexes;
+
+    std::string s = "Showed books with keyword " + str;
+
+    logs.write(SysLog(s));
   }
 }
 
@@ -204,6 +225,10 @@ void BookSys::buy(const std::string &isbn, const int &quantity) {
   const Alteration val(accounts.tellacc().id, buy_book.isbn, false, quantity,
                        quantity * buy_book.price);
   financials.write(val);
+
+  std::string s = "Sold " + std::to_string(quantity) + " books " + isbn;
+
+  logs.write(SysLog(s));
 }
 
 void BookSys::select(const std::string &isbn) {
@@ -265,6 +290,11 @@ void BookSys::modify(const std::string &isbn, const std::string &name,
     index_name.update(id_name_old, id_name_new);
     index_author.update(id_author_old, id_author_new);
     is_isbn_changed = true;
+
+    std::string s = "Modified ISBN of book " + std::string(book_tmp.isbn) +
+                    " to " + std::string(slct_book.isbn);
+
+    logs.write(SysLog(s));
   }
 
   if (name != "") {
@@ -274,6 +304,12 @@ void BookSys::modify(const std::string &isbn, const std::string &name,
     index_name.erase(id_name);
     strcpy(id_name.index, slct_book.name);
     index_name.insert(id_name);
+
+    std::string s = "Modified name of book " + std::string(slct_book.isbn) +
+                    " from " + std::string(book_tmp.name) + " to " +
+                    std::string(slct_book.name);
+
+    logs.write(SysLog(s));
   }
 
   if (author != "") {
@@ -283,6 +319,12 @@ void BookSys::modify(const std::string &isbn, const std::string &name,
     index_author.erase(id_author);
     strcpy(id_author.index, slct_book.author);
     index_author.insert(id_author);
+
+    std::string s = "Modified author of book " + std::string(slct_book.isbn) +
+                    " from " + std::string(book_tmp.author) + " to " +
+                    std::string(slct_book.author);
+
+    logs.write(SysLog(s));
   }
 
   if (keyword != "") {
@@ -303,10 +345,22 @@ void BookSys::modify(const std::string &isbn, const std::string &name,
       index_keyword.insert(Index(tok, slct_book.isbn));
       tok = strtok(nullptr, delim);
     }
+
+    std::string s = "Modified keyword of book " + std::string(slct_book.isbn) +
+                    " from " + std::string(book_tmp.keyword) + " to " +
+                    std::string(slct_book.keyword);
+
+    logs.write(SysLog(s));
   }
 
   if (price >= 0.0) {
     slct_book.price = price;
+
+    std::string s = "Modified price of book " + std::string(slct_book.isbn) +
+                    " from " + std::to_string(book_tmp.price) + " to " +
+                    std::to_string(slct_book.price);
+
+    logs.write(SysLog(s));
   }
 
   if (is_isbn_changed) {
@@ -343,6 +397,11 @@ void BookSys::import(const int &quantity, const double &total_cost) {
   const Alteration val(accounts.tellacc().id, slct_book.isbn, true, quantity,
                        total_cost);
   financials.write(val);
+
+  std::string s =
+      "Impoted " + std::to_string(quantity) + " books " + slct_book.isbn;
+
+  logs.write(SysLog(s));
 }
 
 void BookSys::select_clear() { select_book() = Book(); }

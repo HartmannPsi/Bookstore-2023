@@ -7,6 +7,7 @@
 #include <string>
 
 extern Report<WorkerLog> workers;
+extern Report<SysLog> logs;
 
 Command::Command(const std::string &str) : text(str) {}
 
@@ -146,6 +147,7 @@ void Command::execute() {
       return;
     }
 
+    logs.write(SysLog("Quitted the Bookstore System."));
     exit(0);
 
   } else if (comtype == "show") {
@@ -405,6 +407,10 @@ void Command::execute() {
       throw 0;
       return;
     }
+
+  } else if (comtype == "log") {
+
+    logs.execute();
 
   } else if (comtype == "accounts") {
 

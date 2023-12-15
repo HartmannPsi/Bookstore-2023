@@ -1,5 +1,8 @@
 #include "account.hpp"
+#include "diary.hpp"
 #include "string_check.hpp"
+
+extern Report<SysLog> logs;
 
 Account::Account(const std::string &name_, const std::string &id_,
                  const std::string &password_, const Level &prev_)
@@ -96,6 +99,10 @@ void AccountSys::login(const std::string &id, const std::string &password) {
       return;
     }
   }
+
+  std::string str = "Logged in account " + id;
+
+  logs.write(SysLog(str));
 } // prev = 0
 
 void AccountSys::logout() {
@@ -103,6 +110,9 @@ void AccountSys::logout() {
     throw 0;
     return;
   } else {
+    std::string str = "Logged out account " + std::string(tellacc().id);
+
+    logs.write(SysLog(str));
     log_stack.pop();
   }
 } // prev = 1
@@ -118,6 +128,10 @@ void AccountSys::regin(const std::string &id, const std::string &password,
   } else {
     const Account new_acc(name, id, password, customer);
     database.insert(new_acc);
+
+    std::string str = "Registered account " + id + " with password " + password;
+
+    logs.write(SysLog(str));
   }
 } // prev = 0
 
@@ -158,6 +172,11 @@ void AccountSys::passwd(const std::string &id, const std::string &new_passwd,
       return;
     }
   }
+
+  std::string str = "Changed password of account " + id + " from " +
+                    current_passwd + " to " + new_passwd;
+
+  logs.write(SysLog(str));
 } // prev = 1
 
 void AccountSys::useradd(const std::string &id, const std::string &password,
@@ -177,6 +196,11 @@ void AccountSys::useradd(const std::string &id, const std::string &password,
     const Account new_acc(name, id, password, prev);
     database.insert(new_acc);
   }
+
+  std::string str = "Added account " + id + " of level " +
+                    std::to_string(static_cast<int>(prev));
+
+  logs.write(SysLog(str));
 } // prev = 3
 
 void AccountSys::erase(const std::string id) {
@@ -197,6 +221,10 @@ void AccountSys::erase(const std::string id) {
   }
 
   database.erase(acc);
+
+  std::string str = "Deleted account " + id;
+
+  logs.write(SysLog(str));
 } // prev = 7
 
 Level AccountSys::telllvl() const { return log_stack.top().prev; }

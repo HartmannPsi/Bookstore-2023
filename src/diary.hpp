@@ -68,6 +68,19 @@ public:
   friend std::ostream &operator<<(std::ostream &op, const Alteration &rhs);
 };
 
+class SysLog {
+public:
+  char content[1 << 10] = "";
+
+  SysLog(const std::string &str);
+
+  SysLog() = default;
+
+  ~SysLog() = default;
+
+  friend std::ostream &operator<<(std::ostream &op, const SysLog &rhs);
+};
+
 template <class T> class Report {
 private:
   std::string file_name = "";

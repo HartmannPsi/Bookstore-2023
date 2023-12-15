@@ -12,6 +12,7 @@ BookSys books;
 Finance finances("finance.dat");
 Report<Alteration> financials("report_finance.dat");
 Report<WorkerLog> workers("report_worker.dat");
+Report<SysLog> logs("system_log.dat");
 
 int main() {
   while (!std::cin.eof()) {
