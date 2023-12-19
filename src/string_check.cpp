@@ -150,6 +150,10 @@ bool str_check::check_float(const std::string &str) {
       return false;
     }
 
+    if (str.size() - pos > 3) {
+      return false;
+    }
+
     return true;
   }
 }
