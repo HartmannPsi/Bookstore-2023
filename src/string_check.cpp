@@ -63,6 +63,18 @@ bool str_check::check_keyword(const std::string &str) {
   return true;
 }
 
+bool str_check::check_single_keyword(const std::string &str) {
+  if (!non_invisible_quotes(str)) {
+    return false;
+  }
+
+  if (str.find("|") != std::string::npos) {
+    return false;
+  }
+
+  return true;
+}
+
 bool str_check::check_keyword_non_repetition(const std::string &str) {
 
   if (!check_keyword(str)) {
