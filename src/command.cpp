@@ -424,24 +424,13 @@ void Command::execute() {
 
   } else if (comtype == "log") {
 
+    if (!in.eof()) {
+      throw 0;
+      return;
+    }
+
     logs.execute();
 
-  } else if (comtype == "accounts") {
-
-    accounts.print();
-
-  } else if (comtype == "current_account") {
-
-    std::cout << accounts.tellacc() << '\n';
-
-  } else if (comtype == "current_book") {
-    std::cout << books.select_book();
-  } else if (comtype == "show_index_name") {
-    books.print_id_name();
-  } else if (comtype == "show_index_author") {
-    books.print_id_author();
-  } else if (comtype == "show_index_keyword") {
-    books.print_id_keyword();
   } else {
     throw 0;
     return;
