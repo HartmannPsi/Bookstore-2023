@@ -227,6 +227,11 @@ void Command::execute() {
 
       } else {
 
+        if (!str_check::check_int(c)) {
+          throw 0;
+          return;
+        }
+
         const int count = std::stoi(c);
         if (count < 0 || count > 2'147'483'647) {
           throw 0;
