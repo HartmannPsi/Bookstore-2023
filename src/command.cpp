@@ -13,11 +13,11 @@ Command::Command(const std::string &str) : text(str) {}
 
 void Command::execute() {
 
+  text = str_check::trim(text);
+
   if (text == "") {
     return;
   }
-
-  text = str_check::trim(text);
 
   std::istringstream in(text);
   std::string comtype;
