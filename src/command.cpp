@@ -220,6 +220,11 @@ void Command::execute() {
           return;
         }
 
+        if (s == "" || c.size() > 10) {
+          throw 0;
+          return;
+        }
+
         const int count = std::stoi(c);
         if (count < 0) {
           throw 0;
@@ -248,8 +253,9 @@ void Command::execute() {
       return;
     }
 
-    if (isbn.size() > 20 || !str_check::non_invisible(isbn) ||
-        quantity.size() > 10 || !str_check::check_int(quantity)) {
+    if (isbn == "" || quantity == "" || isbn.size() > 20 ||
+        !str_check::non_invisible(isbn) || quantity.size() > 10 ||
+        !str_check::check_int(quantity)) {
       throw 0;
       return;
     }
@@ -353,7 +359,7 @@ void Command::execute() {
         }
 
         price = tok.substr(7, tok.size() - 7);
-        if (price == "" || price.size() > 13) {
+        if (price == "" || !str_check::check_float(price)) {
           throw 0;
           return;
         }
@@ -377,7 +383,8 @@ void Command::execute() {
       return;
     }
 
-    if (quantity.size() > 10 || total_cost.size() > 13 ||
+    if (quantity == "" || total_cost == "" || quantity.size() > 10 ||
+        !str_check::check_float(total_cost) ||
         !str_check::check_int(quantity)) {
       throw 0;
       return;

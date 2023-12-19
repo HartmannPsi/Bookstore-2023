@@ -114,21 +114,32 @@ bool str_check::check_int(const std::string &str) {
 
 bool str_check::check_float(const std::string &str) {
 
-  if (str[str.size() - 3] != '.') {
+  if (str.size() > 13) {
     return false;
   }
 
   for (int i = 0; i != str.size(); ++i) {
-    if (i == str.size() - 3) {
-      continue;
-    }
-
-    if (!(str[i] >= '0' && str[i] <= '9')) {
+    if (!((str[i] >= '0' && str[i] <= '9') || str[i] == '.')) {
       return false;
     }
   }
 
-  return true;
+  auto pos = str.find(".");
+
+  if (pos == std::string::npos) {
+    return true;
+  } else {
+    if (pos == 0 || pos == str.size() - 1) {
+      return false;
+    }
+
+    auto pos_ = str.rfind(".");
+    if (pos != pos_) {
+      return false;
+    }
+
+    return true;
+  }
 }
 
 std::string str_check::trim(const std::string &str) {
