@@ -208,25 +208,27 @@ void Command::execute() {
 
     } else if (tok.substr(0, 7) == "finance") {
 
-      if (tok.size() == 7) {
+      std::istringstream tin(tok);
+      std::string s, c;
+      tin >> s >> c;
+      if (!tin.eof()) {
+        throw 0;
+        return;
+      }
+
+      if (s == "" || c.size() > 10) {
+        throw 0;
+        return;
+      }
+
+      if (c == "") {
+
         finances.finance();
+
       } else {
 
-        std::istringstream tin(tok);
-        std::string s, c;
-        tin >> s >> c;
-        if (!tin.eof()) {
-          throw 0;
-          return;
-        }
-
-        if (s == "" || c.size() > 10) {
-          throw 0;
-          return;
-        }
-
         const int count = std::stoi(c);
-        if (count < 0) {
+        if (count < 0 || count > 2'147'483'647) {
           throw 0;
           return;
         }
