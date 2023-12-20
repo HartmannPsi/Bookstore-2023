@@ -118,7 +118,7 @@ void Command::execute() {
 
     prev = std::stoi(prev_);
 
-    if (prev != 0 && prev != 1 && prev != 3 && prev != 7) {
+    if (prev != 1 && prev != 3 && prev != 7) {
       throw 0;
       return;
     }
