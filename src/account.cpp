@@ -106,7 +106,7 @@ void AccountSys::login(const std::string &id, const std::string &password) {
 } // prev = 0
 
 void AccountSys::logout() {
-  if (log_stack.size() == 1 || log_stack.top().prev < 1) {
+  if (log_stack.top().prev < 1) {
     throw 0;
     return;
   } else {
@@ -237,6 +237,11 @@ Book &AccountSys::slct_book() { return log_stack.slct_book(); }
 
 void AccountSys::modify(const Book &val_old, const Book &val_new) {
   log_stack.modify(val_old, val_new);
+}
+
+LogStack::LogStack() {
+  acc_stack.push_back(Account("", "", "", visitor));
+  book_stack.push_back(Book());
 }
 
 void LogStack::push(const Account &acc) {

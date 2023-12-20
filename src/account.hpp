@@ -55,7 +55,7 @@ public:
   std::vector<Account> acc_stack;
   std::vector<Book> book_stack;
 
-  LogStack() = default;
+  LogStack();
 
   ~LogStack() = default;
 
