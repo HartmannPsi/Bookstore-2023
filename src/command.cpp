@@ -98,23 +98,25 @@ void Command::execute() {
 
   } else if (comtype == "useradd") {
 
-    std::string id, password, name;
+    std::string id, password, name, prev_;
     int prev;
-    in >> id >> password >> prev >> name;
+    in >> id >> password >> prev_ >> name;
 
     if (!in.eof()) {
       throw 0;
       return;
     }
 
-    if (name == "" || password == "" || id == "" || id.size() > 30 ||
-        password.size() > 30 || name.size() > 30 ||
-        !str_check::num_letter_underscore(id) ||
+    if (name == "" || password == "" || id == "" || prev_ == "" ||
+        prev_.size() > 1 || id.size() > 30 || password.size() > 30 ||
+        name.size() > 30 || !str_check::num_letter_underscore(id) ||
         !str_check::num_letter_underscore(password) ||
-        !str_check::non_invisible(name)) {
+        !str_check::non_invisible(name) || !str_check::check_int(prev_)) {
       throw 0;
       return;
     }
+
+    prev = std::stoi(prev_);
 
     if (prev != 0 && prev != 1 && prev != 3 && prev != 7) {
       throw 0;

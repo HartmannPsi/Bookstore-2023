@@ -117,7 +117,7 @@ bool str_check::check_int(const std::string &str) {
     }
   }
 
-  if (stoi(str) > 2147483647) {
+  if (std::stoi(str) > 2'147'483'647) {
     return false;
   }
 
