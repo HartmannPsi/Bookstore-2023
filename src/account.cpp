@@ -79,16 +79,9 @@ void AccountSys::login(const std::string &id, const std::string &password) {
     return;
   }
 
-  if (password == "") {
+  if (current_acc.prev > acc.prev) {
 
-    if (current_acc.prev > acc.prev) {
-
-      log_stack.push(acc);
-    } else {
-      throw 0;
-      return;
-    }
-
+    log_stack.push(acc);
   } else {
 
     const int res = strcmp(password.c_str(), acc.password);
@@ -106,7 +99,7 @@ void AccountSys::login(const std::string &id, const std::string &password) {
 } // prev = 0
 
 void AccountSys::logout() {
-  if (log_stack.top().prev < 1) {
+  if (log_stack.size() == 1) {
     throw 0;
     return;
   } else {
@@ -150,16 +143,10 @@ void AccountSys::passwd(const std::string &id, const std::string &new_passwd,
     return;
   }
 
-  if (current_passwd == "") {
+  if (log_stack.top().prev == admin) {
 
-    if (log_stack.top().prev == admin) {
-
-      strcpy(acc.password, new_passwd.c_str());
-      database.update(acc);
-    } else {
-      throw 0;
-      return;
-    }
+    strcpy(acc.password, new_passwd.c_str());
+    database.update(acc);
   } else {
 
     const int res = strcmp(current_passwd.c_str(), acc.password);
@@ -240,16 +227,14 @@ void AccountSys::modify(const Book &val_old, const Book &val_new) {
 }
 
 LogStack::LogStack() {
-  acc_stack.push_back(Account("", "", "", visitor));
-  book_stack.push_back(Book());
+  acc_stack.clear();
+  book_stack.clear();
+  // acc_stack.push_back(Account("", "", "", visitor));
+  // book_stack.push_back(Book());
 }
 
 void LogStack::push(const Account &acc) {
 
-  if (!(acc_stack.size() % 100)) {
-    acc_stack.reserve(100);
-    book_stack.reserve(100);
-  }
   acc_stack.push_back(acc);
   book_stack.push_back(Book());
 }

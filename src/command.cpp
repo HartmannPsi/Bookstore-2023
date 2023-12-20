@@ -433,6 +433,8 @@ void Command::execute() {
 
     logs.execute();
 
+  } else if (comtype == "CA") {
+    std::cout << accounts.tellacc();
   } else {
     throw 0;
     return;
