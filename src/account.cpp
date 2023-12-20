@@ -79,9 +79,14 @@ void AccountSys::login(const std::string &id, const std::string &password) {
     return;
   }
 
-  if (current_acc.prev > acc.prev) {
+  if (password == "") {
+    if (current_acc.prev > acc.prev) {
 
-    log_stack.push(acc);
+      log_stack.push(acc);
+    } else {
+      throw 0;
+      return;
+    }
   } else {
 
     const int res = strcmp(password.c_str(), acc.password);
@@ -143,10 +148,15 @@ void AccountSys::passwd(const std::string &id, const std::string &new_passwd,
     return;
   }
 
-  if (log_stack.top().prev == admin) {
+  if (current_passwd == "") {
+    if (log_stack.top().prev == admin) {
 
-    strcpy(acc.password, new_passwd.c_str());
-    database.update(acc);
+      strcpy(acc.password, new_passwd.c_str());
+      database.update(acc);
+    } else {
+      throw 0;
+      return;
+    }
   } else {
 
     const int res = strcmp(current_passwd.c_str(), acc.password);
