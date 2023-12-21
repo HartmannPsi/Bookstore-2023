@@ -86,6 +86,7 @@
   - `bool non_invisible`：除不可见字符外的ASCII字符集
   - `bool non_invisible_quotes`：除不可见字符及英文双引号外的ASCII字符集
   - `bool check_keyword`：检查关键词合法性（是否存在空词）
+  - `bool check_single_keyword`：检查是否为单个关键词
   - `bool check_keyword_non_repetition`：检查关键词合法性（是否存在空词&重复词）
   - `bool check_int`：检查是否符合整型输入要求
   - `bool check_float`：检查是否符合实型输入要求
