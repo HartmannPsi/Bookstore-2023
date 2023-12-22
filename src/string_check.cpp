@@ -19,7 +19,7 @@ bool str_check::num_letter_underscore(const std::string &str) {
 bool str_check::non_invisible(const std::string &str) {
 
   auto check = [](char ch) {
-    return ch > static_cast<char>(32) && ch != static_cast<char>(127);
+    return ch > static_cast<char>(32) && ch < static_cast<char>(127);
   };
 
   for (int i = 0; i != str.size(); ++i) {
@@ -34,7 +34,7 @@ bool str_check::non_invisible(const std::string &str) {
 bool str_check::non_invisible_quotes(const std::string &str) {
 
   auto check = [](char ch) {
-    return ch > static_cast<char>(32) && ch != static_cast<char>(127) &&
+    return ch > static_cast<char>(32) && ch < static_cast<char>(127) &&
            ch != '\"';
   };
 
@@ -50,7 +50,7 @@ bool str_check::non_invisible_quotes(const std::string &str) {
 bool str_check::check_keyword(const std::string &str) {
 
   auto check = [](char ch) {
-    return ch > static_cast<char>(32) && ch != static_cast<char>(127) &&
+    return ch > static_cast<char>(32) && ch < static_cast<char>(127) &&
            ch != '\"';
   };
 
