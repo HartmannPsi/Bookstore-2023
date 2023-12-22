@@ -31,7 +31,7 @@ bool str_check::non_invisible(const std::string &str) {
   return true;
 }
 
-bool check_whole(const std::string &str) {
+bool str_check::check_whole(const std::string &str) {
 
   auto check = [](char ch) {
     return ch > static_cast<char>(31) && ch < static_cast<char>(127);
