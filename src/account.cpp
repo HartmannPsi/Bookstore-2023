@@ -120,8 +120,6 @@ void AccountSys::logout() {
 void AccountSys::regin(const std::string &id, const std::string &password,
                        const std::string &name) {
 
-  assert(false);
-
   const auto count = database.count(Account(id));
 
   if (count) {
@@ -139,6 +137,8 @@ void AccountSys::regin(const std::string &id, const std::string &password,
 
 void AccountSys::passwd(const std::string &id, const std::string &new_passwd,
                         const std::string &current_passwd) {
+
+  assert(false);
 
   if (log_stack.top().prev < 1) {
     throw 0;
