@@ -204,8 +204,6 @@ void AccountSys::useradd(const std::string &id, const std::string &password,
 
 void AccountSys::erase(const std::string id) {
 
-  assert(false);
-
   if (log_stack.top().prev < 7) {
     throw 0;
     return;
