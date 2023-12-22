@@ -106,8 +106,6 @@ void AccountSys::login(const std::string &id, const std::string &password) {
 
 void AccountSys::logout() {
 
-  assert(false);
-
   if (log_stack.size() == 1) {
     throw 0;
     return;
@@ -121,6 +119,8 @@ void AccountSys::logout() {
 
 void AccountSys::regin(const std::string &id, const std::string &password,
                        const std::string &name) {
+
+  assert(false);
 
   const auto count = database.count(Account(id));
 
