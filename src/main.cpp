@@ -5,7 +5,7 @@
 #include "diary.hpp"
 #include "string_check.hpp"
 #include <stdexcept>
-#define TEST
+//#define TEST
 
 AccountSys accounts;
 CommandSys commands;
