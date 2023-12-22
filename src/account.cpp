@@ -73,8 +73,6 @@ AccountSys::AccountSys() : database("accounts.dat") {
 
 void AccountSys::login(const std::string &id, const std::string &password) {
 
-  assert(false);
-
   const auto acc = database.find(Account(id));
   const auto &current_acc = log_stack.top();
   if (strlen(acc.id) == 0) {
@@ -107,6 +105,9 @@ void AccountSys::login(const std::string &id, const std::string &password) {
 } // prev = 0
 
 void AccountSys::logout() {
+
+  assert(false);
+
   if (log_stack.size() == 1) {
     throw 0;
     return;
