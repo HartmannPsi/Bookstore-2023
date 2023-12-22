@@ -138,8 +138,6 @@ void AccountSys::regin(const std::string &id, const std::string &password,
 void AccountSys::passwd(const std::string &id, const std::string &new_passwd,
                         const std::string &current_passwd) {
 
-  assert(false);
-
   if (log_stack.top().prev < 1) {
     throw 0;
     return;
@@ -182,6 +180,8 @@ void AccountSys::passwd(const std::string &id, const std::string &new_passwd,
 
 void AccountSys::useradd(const std::string &id, const std::string &password,
                          const Level &prev, const std::string &name) {
+
+  assert(false);
 
   if (log_stack.top().prev < 3 || log_stack.top().prev <= prev) {
     throw 0;
