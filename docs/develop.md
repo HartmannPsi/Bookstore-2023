@@ -84,6 +84,7 @@
 - `string_check.hpp`：字符串合法性检查
   - `bool num_letter_underscore`：仅含数字、字母、下划线
   - `bool non_invisible`：除不可见字符外的ASCII字符集
+  - `bool check_all`：检查整句语句是否有不可见字符
   - `bool non_invisible_quotes`：除不可见字符及英文双引号外的ASCII字符集
   - `bool check_keyword`：检查关键词合法性（是否存在空词）
   - `bool check_single_keyword`：检查是否为单个关键词
