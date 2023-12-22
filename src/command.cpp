@@ -2,6 +2,7 @@
 #include "book.hpp"
 #include "diary.hpp"
 #include "string_check.hpp"
+#include <cassert>
 #include <iomanip>
 #include <sstream>
 #include <string>
@@ -44,6 +45,8 @@ void Command::execute() {
 
   } else if (comtype == "logout") {
 
+    assert(false);
+
     if (!in.eof()) {
       throw 0;
       return;
@@ -52,6 +55,8 @@ void Command::execute() {
     accounts.logout();
 
   } else if (comtype == "register") {
+
+    assert(false);
 
     std::string id, password, name;
     in >> id >> password >> name;
@@ -73,6 +78,8 @@ void Command::execute() {
     accounts.regin(id, password, name);
 
   } else if (comtype == "passwd") {
+
+    assert(false);
 
     std::string id, passwd1, passwd2;
     in >> id >> passwd1 >> passwd2;
@@ -127,6 +134,8 @@ void Command::execute() {
 
   } else if (comtype == "delete") {
 
+    assert(false);
+
     std::string id;
     in >> id;
 
@@ -144,6 +153,8 @@ void Command::execute() {
 
   } else if (comtype == "quit" || comtype == "exit") {
 
+    assert(false);
+
     if (!in.eof()) {
       throw 0;
       return;
@@ -153,6 +164,9 @@ void Command::execute() {
     exit(0);
 
   } else if (comtype == "show") {
+
+    assert(false);
+
     std::string str = "";
     std::string tok;
     int type = 0;
@@ -254,6 +268,8 @@ void Command::execute() {
 
   } else if (comtype == "buy") {
 
+    assert(false);
+
     std::string isbn, quantity;
     in >> isbn >> quantity;
 
@@ -273,6 +289,8 @@ void Command::execute() {
 
   } else if (comtype == "select") {
 
+    assert(false);
+
     std::string isbn;
     in >> isbn;
 
@@ -289,6 +307,8 @@ void Command::execute() {
     books.select(isbn);
 
   } else if (comtype == "modify") {
+
+    assert(false);
 
     bool mdfy_isbn = false, mdfy_name = false, mdfy_author = false,
          mdfy_keyword = false, mdfy_price = false;
@@ -384,6 +404,8 @@ void Command::execute() {
 
   } else if (comtype == "import") {
 
+    assert(false);
+
     std::string quantity, total_cost;
     in >> quantity >> total_cost;
 
@@ -402,6 +424,8 @@ void Command::execute() {
     books.import(stoi(quantity), std::stod(total_cost));
 
   } else if (comtype == "report") {
+
+    assert(false);
 
     std::string type;
     in >> type;
@@ -425,6 +449,8 @@ void Command::execute() {
     }
 
   } else if (comtype == "log") {
+
+    assert(false);
 
     if (!in.eof()) {
       throw 0;
