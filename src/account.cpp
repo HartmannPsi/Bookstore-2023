@@ -1,6 +1,7 @@
 #include "account.hpp"
 #include "diary.hpp"
 #include "string_check.hpp"
+#include <cassert>
 
 extern Report<SysLog> logs;
 
@@ -71,6 +72,8 @@ AccountSys::AccountSys() : database("accounts.dat") {
 }
 
 void AccountSys::login(const std::string &id, const std::string &password) {
+
+  assert(false);
 
   const auto acc = database.find(Account(id));
   const auto &current_acc = log_stack.top();
