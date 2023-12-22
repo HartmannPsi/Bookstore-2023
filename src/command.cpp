@@ -45,7 +45,7 @@ void Command::execute() {
 
   } else if (comtype == "logout") {
 
-    assert(false);
+    // assert(false);
 
     if (!in.eof()) {
       throw 0;
@@ -56,7 +56,7 @@ void Command::execute() {
 
   } else if (comtype == "register") {
 
-    assert(false);
+    // assert(false);
 
     std::string id, password, name;
     in >> id >> password >> name;
@@ -79,7 +79,7 @@ void Command::execute() {
 
   } else if (comtype == "passwd") {
 
-    assert(false);
+    // assert(false);
 
     std::string id, passwd1, passwd2;
     in >> id >> passwd1 >> passwd2;
@@ -134,7 +134,7 @@ void Command::execute() {
 
   } else if (comtype == "delete") {
 
-    assert(false);
+    // assert(false);
 
     std::string id;
     in >> id;
@@ -153,7 +153,7 @@ void Command::execute() {
 
   } else if (comtype == "quit" || comtype == "exit") {
 
-    assert(false);
+    // assert(false);
 
     if (!in.eof()) {
       throw 0;
@@ -165,7 +165,7 @@ void Command::execute() {
 
   } else if (comtype == "show") {
 
-    assert(false);
+    // assert(false);
 
     std::string str = "";
     std::string tok;
@@ -268,7 +268,7 @@ void Command::execute() {
 
   } else if (comtype == "buy") {
 
-    assert(false);
+    // assert(false);
 
     std::string isbn, quantity;
     in >> isbn >> quantity;
@@ -289,7 +289,7 @@ void Command::execute() {
 
   } else if (comtype == "select") {
 
-    assert(false);
+    // assert(false);
 
     std::string isbn;
     in >> isbn;
@@ -308,7 +308,7 @@ void Command::execute() {
 
   } else if (comtype == "modify") {
 
-    assert(false);
+    // assert(false);
 
     bool mdfy_isbn = false, mdfy_name = false, mdfy_author = false,
          mdfy_keyword = false, mdfy_price = false;
@@ -404,7 +404,7 @@ void Command::execute() {
 
   } else if (comtype == "import") {
 
-    assert(false);
+    // assert(false);
 
     std::string quantity, total_cost;
     in >> quantity >> total_cost;
@@ -425,7 +425,7 @@ void Command::execute() {
 
   } else if (comtype == "report") {
 
-    assert(false);
+    // assert(false);
 
     std::string type;
     in >> type;
@@ -450,7 +450,7 @@ void Command::execute() {
 
   } else if (comtype == "log") {
 
-    assert(false);
+    // assert(false);
 
     if (!in.eof()) {
       throw 0;
