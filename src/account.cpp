@@ -181,8 +181,6 @@ void AccountSys::passwd(const std::string &id, const std::string &new_passwd,
 void AccountSys::useradd(const std::string &id, const std::string &password,
                          const Level &prev, const std::string &name) {
 
-  assert(false);
-
   if (log_stack.top().prev < 3 || log_stack.top().prev <= prev) {
     throw 0;
     return;
@@ -205,6 +203,9 @@ void AccountSys::useradd(const std::string &id, const std::string &password,
 } // prev = 3
 
 void AccountSys::erase(const std::string id) {
+
+  assert(false);
+
   if (log_stack.top().prev < 7) {
     throw 0;
     return;
