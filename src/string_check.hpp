@@ -24,6 +24,8 @@ bool check_int(const std::string &str);
 
 bool check_float(const std::string &str);
 
+bool check_whole(const std::string &str);
+
 std::string trim(const std::string &str);
 } // namespace str_check
 

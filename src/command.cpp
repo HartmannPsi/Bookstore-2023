@@ -14,7 +14,7 @@ Command::Command(const std::string &str) : text(str) {}
 
 void Command::execute() {
 
-  if (!str_check::non_invisible(text)) {
+  if (!str_check::check_whole(text)) {
     throw 0;
     return;
   }

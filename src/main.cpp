@@ -5,6 +5,7 @@
 #include "diary.hpp"
 #include "string_check.hpp"
 #include <stdexcept>
+#define TEST
 
 AccountSys accounts;
 CommandSys commands;
@@ -23,7 +24,7 @@ int main() {
     try {
       std::string text;
       getline(std::cin, text);
-#ifdef DEBUG
+#ifdef TEST
       std::cout << text << ": \n";
 #endif
       commands.read(text);
@@ -48,7 +49,7 @@ int main() {
         workers.write(log);
       }
     }
-#ifdef DEBUG
+#ifdef TEST
     std::cout << "-----------------------------------------------------------"
                  "---------\n";
 #endif
